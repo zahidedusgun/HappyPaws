@@ -1,1 +1,1 @@
-# HappyPaws
+# Happy Paws
