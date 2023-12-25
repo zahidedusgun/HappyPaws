@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HappyPaws.Domain.Enums
+namespace HappyPaws.Domain.Common
 {
-    public enum Gender
+    public interface IEntityBase<TKey>
     {
-        Male = 0,
-        Female = 1,
-        Unknown = 2
+        public TKey Id { get; set; }
     }
 }

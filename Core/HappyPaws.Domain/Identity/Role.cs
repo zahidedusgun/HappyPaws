@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HappyPaws.Domain.Enums
+namespace HappyPaws.Domain.Identity
 {
-    public enum Gender
+    public class Role : IdentityRole<Guid>
     {
-        Male = 0,
-        Female = 1,
-        Unknown = 2
     }
 }

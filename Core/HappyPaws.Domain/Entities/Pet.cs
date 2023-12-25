@@ -14,7 +14,7 @@ namespace HappyPaws.Domain.Entities
         public string Type { get; set; }
         public string Breed { get; set; }
         public int Age { get; set; }
-        public PetGender Gender { get; set; }
+        public Gender Gender { get; set; }
         public AdoptionStatus AdoptionStatus { get; set; }
         public DateTime CreatedDate { get; set; }
         public Adoption Adoption { get; set; }
