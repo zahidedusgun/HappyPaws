@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 Presentation/HappyPaws.WebApi/appsettings.json
+Presentation/HappyPaws.API/appsettings.json

@@ -9,11 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{E54B7AE6-A491-4D62-8DE5-08D1CD46D3A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPaws.Domain", "Core\HappyPaws.Domain\HappyPaws.Domain.csproj", "{065DD3BF-52BB-4B69-822D-510E3EB340ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyPaws.Domain", "Core\HappyPaws.Domain\HappyPaws.Domain.csproj", "{065DD3BF-52BB-4B69-822D-510E3EB340ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPaws.Persistence", "Infrastructure\HappyPaws.Persistence\HappyPaws.Persistence.csproj", "{EA28AF7F-209D-45F3-8A21-01A357BA6AB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyPaws.Persistence", "Infrastructure\HappyPaws.Persistence\HappyPaws.Persistence.csproj", "{EA28AF7F-209D-45F3-8A21-01A357BA6AB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPaws.WebApi", "Presentation\HappyPaws.WebApi\HappyPaws.WebApi.csproj", "{C883D70C-162F-4E14-A73A-8BBED7DDD7A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPaws.API", "Presentation\HappyPaws.API\HappyPaws.API.csproj", "{FF2E9C67-3913-4450-9664-5B5718A2282C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{EA28AF7F-209D-45F3-8A21-01A357BA6AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA28AF7F-209D-45F3-8A21-01A357BA6AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA28AF7F-209D-45F3-8A21-01A357BA6AB4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C883D70C-162F-4E14-A73A-8BBED7DDD7A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C883D70C-162F-4E14-A73A-8BBED7DDD7A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C883D70C-162F-4E14-A73A-8BBED7DDD7A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C883D70C-162F-4E14-A73A-8BBED7DDD7A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF2E9C67-3913-4450-9664-5B5718A2282C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF2E9C67-3913-4450-9664-5B5718A2282C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF2E9C67-3913-4450-9664-5B5718A2282C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF2E9C67-3913-4450-9664-5B5718A2282C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,7 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{065DD3BF-52BB-4B69-822D-510E3EB340ED} = {29D06ED0-4745-4F11-BDC7-90E22406FC3D}
 		{EA28AF7F-209D-45F3-8A21-01A357BA6AB4} = {25D8193E-2DF5-4406-94CE-2E5F9C8BA484}
-		{C883D70C-162F-4E14-A73A-8BBED7DDD7A1} = {E54B7AE6-A491-4D62-8DE5-08D1CD46D3A2}
+		{FF2E9C67-3913-4450-9664-5B5718A2282C} = {E54B7AE6-A491-4D62-8DE5-08D1CD46D3A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C98E5428-A0B9-45F7-91E5-BFA44C68ECEF}
