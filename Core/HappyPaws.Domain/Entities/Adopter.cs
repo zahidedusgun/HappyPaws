@@ -1,22 +1,26 @@
-﻿using System;
+﻿using HappyPaws.Domain.Common;
+using HappyPaws.Domain.Identity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HappyPaws.Domain.Entities
 {
-    public class Adopter
+    public class Adopter : EntityBase<Guid>
     {
-        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public int PhoneNumber { get; set; }
-        public Adoption Adoption { get; set; }
-        public Guid AdoptionId { get; set; }
+        public string PhoneNumber { get; set; }
 
-        //public User User { get; set; }
+        public ICollection<Pet> AdoptedPets { get; set; }
+        public ICollection<Adoption> Adoptions { get; set; } //petadopter
+
+        public User User { get; set; }
+        public Guid UserId { get; set; }
     }
 
 }

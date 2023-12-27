@@ -3,40 +3,26 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HappyPaws.Persistence.Configurations
 {
-    public class PetConfiguration : IEntityTypeConfiguration<Pet>
+    public class AdoptionConfiguration : IEntityTypeConfiguration<Adoption>
     {
-        public void Configure(EntityTypeBuilder<Pet> builder)
+        public void Configure(EntityTypeBuilder<Adoption> builder)
         {
             // Primary key
             builder.HasKey(u => u.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
-            // Name
-            builder.Property(x => x.Name).IsRequired();
-            builder.Property(x => x.Name).HasMaxLength(70);
+            // AdoptionDate
+            builder.Property(x => x.AdoptionDate).IsRequired();
 
-            // Type
-            builder.Property(x => x.Type).IsRequired();
-            builder.Property(x => x.Type).HasMaxLength(70);
-
-            // Breed
-            builder.Property(x => x.Breed).IsRequired();
-            builder.Property(x => x.Breed).HasMaxLength(70);
-
-            // Age
-            builder.Property(x => x.Age).IsRequired();
-            builder.Property(x => x.Age).HasColumnType("smallint");
-
-            // Gender
-            builder.Property(x => x.Gender).IsRequired();
-            builder.Property(x => x.Gender).HasConversion<int>();
+            // AdoptionNotes
+            builder.Property(x => x.AdoptionNotes).IsRequired();
+            builder.Property(x => x.AdoptionNotes).HasMaxLength(500);
 
             // AdoptionStatus
             builder.Property(x => x.AdoptionStatus).IsRequired();
@@ -70,20 +56,15 @@ namespace HappyPaws.Persistence.Configurations
 
             // Relationships
 
-            //builder.HasOne<Adopter>(x => x.Adopter)
-            //    .WithMany(x => x.AdoptedPets)
-            //    .HasForeignKey(x => x.AdopterId);
+            //builder.HasOne(a => a.Pet)
+            //    .WithMany(p => p.Adoptions)
+            //    .HasForeignKey(a => a.PetId);
 
-            //builder.HasMany<HealthRecord>(x => x.HealthRecords)
-            //    .WithOne(hr => hr.Pet)
-            //    .HasForeignKey(hr => hr.PetId);
+            //builder.HasOne(a => a.Adopter)
+            //    .WithMany(a => a.Adoptions)
+            //    .HasForeignKey(a => a.AdopterId);
 
-            //// one to many with adoptions
-            //builder.HasMany(x => x.Adoptions)
-            //    .WithOne(x => x.Pet)
-            //    .HasForeignKey(x => x.PetId);
-
-            builder.ToTable("Pets");
+            builder.ToTable("Adoptions");
         }
     }
 }
