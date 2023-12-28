@@ -84,6 +84,7 @@ namespace HappyPaws.Persistence.Configurations
             //    .HasForeignKey(x => x.PetId);
 
             builder.ToTable("Pets");
+
         }
     }
 }

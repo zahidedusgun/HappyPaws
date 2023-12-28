@@ -11,8 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//var connectionString = builder.Configuration.GetConnectionString("YetgenPostgreSQL");
-var connectionString = builder.Configuration.GetSection("YetgenPostgreSQL").Value;
+
+var connectionString = builder.Configuration.GetConnectionString("YetgenPostgreSQL");
+//var connectionString = builder.Configuration.GetSection("YetgenPostgreSQL").Value;
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
