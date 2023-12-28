@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using HappyPaws.Domain.Entities;
 
 namespace HappyPaws.Domain.Identity
 {
@@ -23,5 +24,7 @@ namespace HappyPaws.Domain.Identity
         public DateTimeOffset CreatedOn { get; set; }
         public string? ModifiedByUserId { get; set; }
         public DateTimeOffset? ModifiedOn { get; set; }
+        public Adopter Adopter { get; set; }
+        public Guid? AdopterId { get; set; }
     }
 }

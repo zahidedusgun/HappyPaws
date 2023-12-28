@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HappyPaws.Domain.Common;
 using HappyPaws.Domain.Enums;
 
 namespace HappyPaws.Domain.Entities
 {
-    public class Adoption
+    public class Adoption : EntityBase<Guid>
     {
-        public Guid Id { get; set; }
         public DateTime AdoptionDate { get; set; }
         public string AdoptionNotes { get; set; }
         public AdoptionStatus AdoptionStatus { get; set; }

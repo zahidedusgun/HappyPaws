@@ -62,9 +62,9 @@ namespace HappyPaws.Persistence.Configuration.Identity
             builder.Property(x => x.ModifiedOn).IsRequired(false);
 
             // Relationship
-            builder.HasOne(x => x.Adopter)
-                 .WithOne(u => u.User)
-                 .HasForeignKey<Adopter>(x => x.UserId);
+            //builder.HasOne(x => x.Adopter)
+            //     .WithOne(u => u.User)
+            //     .HasForeignKey<Adopter>(x => x.UserId);
 
             builder.ToTable("Users");
         }
