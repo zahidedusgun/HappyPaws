@@ -1,46 +1,38 @@
 ﻿using HappyPaws.Domain.Entities;
+using HappyPaws.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HappyPaws.Persistence.Configurations
 {
-    public class PetConfiguration : IEntityTypeConfiguration<Pet>
+    public class AdopterConfiguration : IEntityTypeConfiguration<Adopter>
     {
-        public void Configure(EntityTypeBuilder<Pet> builder)
+        public void Configure(EntityTypeBuilder<Adopter> builder)
         {
             // Primary key
             builder.HasKey(u => u.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
             // Name
-            builder.Property(x => x.Name).IsRequired();
-            builder.Property(x => x.Name).HasMaxLength(70);
+            builder.Property(x => x.FirstName).IsRequired();
+            builder.Property(x => x.FirstName).HasMaxLength(70);
 
-            // Type
-            builder.Property(x => x.Type).IsRequired();
-            builder.Property(x => x.Type).HasMaxLength(70);
+            // LastName
+            builder.Property(x => x.LastName).IsRequired();
+            builder.Property(x => x.LastName).HasMaxLength(70);
 
-            // Breed
-            builder.Property(x => x.Breed).IsRequired();
-            builder.Property(x => x.Breed).HasMaxLength(70);
+            // Email
+            builder.Property(x => x.Email).IsRequired();
+            builder.Property(x => x.Email).HasMaxLength(200);
 
-            // Age
-            builder.Property(x => x.Age).IsRequired();
-            builder.Property(x => x.Age).HasColumnType("smallint");
-
-            // Gender
-            builder.Property(x => x.Gender).IsRequired();
-            builder.Property(x => x.Gender).HasConversion<int>();
-
-            // AdoptionStatus
-            builder.Property(x => x.AdoptionStatus).IsRequired();
-            builder.Property(x => x.AdoptionStatus).HasConversion<int>();
+            // PhoneNumber
+            builder.Property(x => x.PhoneNumber).IsRequired();
+            builder.Property(x => x.PhoneNumber).HasMaxLength(200);
 
             // COMMON FIELDS
 
@@ -70,21 +62,24 @@ namespace HappyPaws.Persistence.Configurations
 
             // Relationships
 
-            //builder.HasOne<Adopter>(x => x.Adopter)
-            //    .WithMany(x => x.AdoptedPets)
+            //many to one with pets
+
+            builder.HasMany<Pet>(x => x.AdoptedPets)
+                .WithOne(x => x.Adopter)
+                .HasForeignKey(x => x.AdopterId);
+
+            ////one to many with adoptions
+
+            //builder.HasMany(x => x.Adoptions)
+            //    .WithOne(x => x.Adopter)
             //    .HasForeignKey(x => x.AdopterId);
 
-            //builder.HasMany<HealthRecord>(x => x.HealthRecords)
-            //    .WithOne(hr => hr.Pet)
-            //    .HasForeignKey(hr => hr.PetId);
+            //one to one with user
+            //builder.HasOne(x => x.User)
+            //     .WithOne(u => u.Adopter)
+            //     .HasForeignKey<User>(x => x.AdopterId);
 
-            //// one to many with adoptions
-            //builder.HasMany(x => x.Adoptions)
-            //    .WithOne(x => x.Pet)
-            //    .HasForeignKey(x => x.PetId);
-
-            builder.ToTable("Pets");
-
+            builder.ToTable("Adopters");
         }
     }
 }

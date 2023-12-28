@@ -13,16 +13,14 @@ namespace HappyPaws.Domain.Entities
         public string Name { get; set; }
         public string Type { get; set; }
         public string Breed { get; set; }
-        public int Age { get; set; }
+        public short Age { get; set; }
         public Gender Gender { get; set; }
         public AdoptionStatus AdoptionStatus { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public Adoption Adoption { get; set; }
-        public HealthRecord HealthRecord { get; set; }
+        public Adopter Adopter { get; set; }
+        public Adopter AdopterId { get; set; }
 
-
-        //public User User { get; set; }
-
+        public ICollection<Adoption> Adoptions { get; set; }
+        public ICollection<HealthRecord> HealthRecords { get;}
     }
 
 }

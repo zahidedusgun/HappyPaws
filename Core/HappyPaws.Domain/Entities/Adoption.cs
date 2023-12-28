@@ -12,7 +12,7 @@ namespace HappyPaws.Domain.Entities
     {
         public DateTime AdoptionDate { get; set; }
         public string AdoptionNotes { get; set; }
-        public AdoptionStatus AdoptionStatus { get; set; }
+        public AdoptionStatus AdoptionStatus { get; set; } //is adoption process done
         public Pet Pet { get; set; }
         public Guid PetId { get; set; }
         public Adopter Adopter { get; set; }

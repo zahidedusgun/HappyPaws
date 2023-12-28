@@ -13,8 +13,8 @@ namespace HappyPaws.Domain.Entities
         public string Description { get; set; }
         public DateTime VetVisitDate { get; set; }
         public string VetNotes { get; set; }
-        public Pet Pet { get; set; }
-        public Guid PetId { get; set; }
+        public Pet Pet { get; set; } //dependent entity between pet and healthrecord
+        public Pet PetId { get; set; }
     }
 
 }

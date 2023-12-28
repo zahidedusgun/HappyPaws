@@ -26,5 +26,6 @@ namespace HappyPaws.Domain.Identity
         public DateTimeOffset? ModifiedOn { get; set; }
         public Adopter Adopter { get; set; }
         public Guid? AdopterId { get; set; }
+
     }
 }
