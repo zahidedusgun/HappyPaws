@@ -56,13 +56,15 @@ namespace HappyPaws.Persistence.Configurations
 
             // Relationships
 
-            //builder.HasOne(a => a.Pet)
-            //    .WithMany(p => p.Adoptions)
-            //    .HasForeignKey(a => a.PetId);
 
-            //builder.HasOne(a => a.Adopter)
-            //    .WithMany(a => a.Adoptions)
-            //    .HasForeignKey(a => a.AdopterId);
+            builder.HasOne(a => a.Pet)
+                .WithMany(p => p.Adoptions)
+                .HasForeignKey(a => a.PetId);
+
+            builder.HasOne(a => a.Adopter)
+                .WithMany(a => a.Adoptions)
+                .HasForeignKey(a => a.AdopterId);
+
 
             builder.ToTable("Adoptions");
         }

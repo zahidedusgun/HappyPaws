@@ -61,10 +61,10 @@ namespace HappyPaws.Persistence.Configuration.Identity
             // LastModifiedOn
             builder.Property(x => x.ModifiedOn).IsRequired(false);
 
-            // Relationship
-            //builder.HasOne(x => x.Adopter)
-            //     .WithOne(u => u.User)
-            //     .HasForeignKey<Adopter>(x => x.UserId);
+            //Relationship
+            builder.HasOne(x => x.Adopter)
+                 .WithOne(u => u.User)
+                 .HasForeignKey<Adopter>(x => x.UserId);
 
             builder.ToTable("Users");
         }

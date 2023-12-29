@@ -1,5 +1,4 @@
 ﻿using HappyPaws.Domain.Entities;
-using HappyPaws.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -10,29 +9,27 @@ using System.Threading.Tasks;
 
 namespace HappyPaws.Persistence.Configurations
 {
-    public class AdopterConfiguration : IEntityTypeConfiguration<Adopter>
+    public class HealthRecordConfiguration : IEntityTypeConfiguration<HealthRecord>
     {
-        public void Configure(EntityTypeBuilder<Adopter> builder)
+        public void Configure(EntityTypeBuilder<HealthRecord> builder)
         {
             // Primary key
             builder.HasKey(u => u.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
-            // Name
-            builder.Property(x => x.FirstName).IsRequired();
-            builder.Property(x => x.FirstName).HasMaxLength(70);
+            // RecordDate
+            builder.Property(x => x.CreatedOn).IsRequired();
 
-            // LastName
-            builder.Property(x => x.LastName).IsRequired();
-            builder.Property(x => x.LastName).HasMaxLength(70);
+            // Description
+            builder.Property(x => x.Description).IsRequired();
+            builder.Property(x => x.Description).HasMaxLength(1000);
 
-            // Email
-            builder.Property(x => x.Email).IsRequired();
-            builder.Property(x => x.Email).HasMaxLength(200);
+            // VetVisitDate
+            builder.Property(x => x.VetVisitDate).IsRequired();
 
-            // PhoneNumber
-            builder.Property(x => x.PhoneNumber).IsRequired();
-            builder.Property(x => x.PhoneNumber).HasMaxLength(200);
+            // VetNotes
+            builder.Property(x => x.VetNotes).IsRequired();
+            builder.Property(x => x.VetNotes).HasMaxLength(1000);
 
             // COMMON FIELDS
 
@@ -59,17 +56,10 @@ namespace HappyPaws.Persistence.Configurations
 
             // IsDeleted
             builder.Property(x => x.IsDeleted).IsRequired();
+   
 
-            // Relationships
-
-
-            //one to one with user
-            builder.HasOne(x => x.User)
-                 .WithOne(u => u.Adopter)
-                 .HasForeignKey<Adopter>(x => x.UserId);
-
-
-            builder.ToTable("Adopters");
+            builder.ToTable("HealthRecords");
         }
     }
 }
+

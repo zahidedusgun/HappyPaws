@@ -70,18 +70,13 @@ namespace HappyPaws.Persistence.Configurations
 
             // Relationships
 
-            //builder.HasOne<Adopter>(x => x.Adopter)
-            //    .WithMany(x => x.AdoptedPets)
-            //    .HasForeignKey(x => x.AdopterId);
+            builder.HasOne(x => x.Adopter)
+                .WithMany(x => x.AdoptedPets)
+                .HasForeignKey(x => x.AdopterId);
 
-            //builder.HasMany<HealthRecord>(x => x.HealthRecords)
-            //    .WithOne(hr => hr.Pet)
-            //    .HasForeignKey(hr => hr.PetId);
-
-            //// one to many with adoptions
-            //builder.HasMany(x => x.Adoptions)
-            //    .WithOne(x => x.Pet)
-            //    .HasForeignKey(x => x.PetId);
+            builder.HasMany(x => x.HealthRecords)
+                .WithOne(hr => hr.Pet)
+                .HasForeignKey(hr => hr.PetId);
 
             builder.ToTable("Pets");
 
