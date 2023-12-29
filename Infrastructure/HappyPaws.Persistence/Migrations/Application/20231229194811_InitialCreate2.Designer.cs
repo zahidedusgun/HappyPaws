@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HappyPaws.Persistence.Migrations.Application
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231229193257_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231229194811_InitialCreate2")]
+    partial class InitialCreate2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,9 +72,10 @@ namespace HappyPaws.Persistence.Migrations.Application
                     b.Property<DateTimeOffset?>("ModifiedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("PhoneNumber")
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("integer");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HappyPaws.Persistence.Migrations.Application
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCreate2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,7 @@ namespace HappyPaws.Persistence.Migrations.Application
                     FirstName = table.Column<string>(type: "character varying(70)", maxLength: 70, nullable: false),
                     LastName = table.Column<string>(type: "character varying(70)", maxLength: 70, nullable: false),
                     Email = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    PhoneNumber = table.Column<int>(type: "integer", maxLength: 200, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     CreatedByUserId = table.Column<string>(type: "character varying(75)", maxLength: 75, nullable: false),
