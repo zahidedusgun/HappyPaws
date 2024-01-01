@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Commands\Adopter\CreateAdopter\" />
     <Folder Include="Features\Commands\Adopter\UpdateAdopter\" />
     <Folder Include="Features\Commands\Adopter\RemoveAdopter\" />
     <Folder Include="Features\Commands\HealthRecord\" />
