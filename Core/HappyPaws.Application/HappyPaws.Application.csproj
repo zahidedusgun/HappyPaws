@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Commands\Adopter\CreateAdopter\" />
+    <Folder Include="Features\Commands\Adopter\UpdateAdopter\" />
+    <Folder Include="Features\Commands\Adopter\RemoveAdopter\" />
+    <Folder Include="Features\Commands\HealthRecord\" />
+    <Folder Include="Features\Commands\Adoption\" />
+    <Folder Include="Features\Commands\Pet\" />
+    <Folder Include="Features\Queries\" />
+  </ItemGroup>
+
+</Project>
