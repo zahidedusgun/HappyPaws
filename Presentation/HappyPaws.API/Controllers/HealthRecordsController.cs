@@ -1,5 +1,11 @@
-﻿using HappyPaws.Domain.Entities;
+﻿using HappyPaws.Application.Features.Commands.HealthRecord.CreateHealthRecord;
+using HappyPaws.Application.Features.Commands.HealthRecord.RemoveHealthRecord;
+using HappyPaws.Application.Features.Commands.HealthRecord.UpdateHealthRecord;
+using HappyPaws.Application.Features.Queries.HealthRecord.GetAllHealthRecord;
+using HappyPaws.Application.Features.Queries.HealthRecord.GetByIdHealthRecord;
+using HappyPaws.Domain.Entities;
 using HappyPaws.Persistence.Contexts;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,100 +16,53 @@ namespace HappyPaws.API.Controllers
     [ApiController]
     public class HealthRecordsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMediator _mediator;
 
-        public HealthRecordsController(ApplicationDbContext context)
+        public HealthRecordsController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetHealthRecords()
+        public async Task<IActionResult> Get(GetAllHealthRecordQueryRequest getAllHealthRecordQueryRequest)
         {
-            var healthRecords = await _context.HealthRecords
-                .Include(hr => hr.Pet) 
-                .ToListAsync();
+            var requestResponse = await _mediator.Send(getAllHealthRecordQueryRequest);
 
-            return Ok(healthRecords);
+            return Ok(requestResponse);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetHealthRecord(Guid id)
+        public async Task<IActionResult> Get([FromRoute] GetByIdHealthRecordQueryRequest getByIdHealthRecordQueryRequest)
         {
-            var healthRecord = await _context.HealthRecords
-                .Include(hr => hr.Pet) 
-                .FirstOrDefaultAsync(hr => hr.Id == id);
-
-            if (healthRecord == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(healthRecord);
+            return Ok(await _mediator.Send(getByIdHealthRecordQueryRequest));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostHealthRecord([FromBody] HealthRecord healthRecord)
+        public async Task<IActionResult> Post(CreateHealthRecordCommandRequest createHealthRecordCommandRequest)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var requestResponse = await _mediator.Send(createHealthRecordCommandRequest);
 
-            _context.HealthRecords.Add(healthRecord);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetHealthRecord", new { id = healthRecord.Id }, healthRecord);
+            return Ok(StatusCode(requestResponse.StatusCode));
         }
 
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHealthRecord(Guid id, [FromBody] HealthRecord healthRecord)
+        public async Task<IActionResult> Put([FromBody] UpdateHealthRecordCommandRequest updateHealthRecordCommandRequest)
         {
-            if (id != healthRecord.Id)
-            {
-                return BadRequest();
-            }
+            await _mediator.Send(updateHealthRecordCommandRequest);
 
-            _context.Entry(healthRecord).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HealthRecordExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHealthRecord(Guid id)
+        public async Task<IActionResult> Delete([FromRoute] RemoveHealthRecordCommandRequest removeHealthRecordCommandRequest)
         {
-            var healthRecord = await _context.HealthRecords.FindAsync(id);
-            if (healthRecord == null)
-            {
-                return NotFound();
-            }
+            await _mediator.Send(removeHealthRecordCommandRequest);
 
-            _context.HealthRecords.Remove(healthRecord);
-            await _context.SaveChangesAsync();
-
-            return Ok(healthRecord);
+            return Ok();
         }
 
-        private bool HealthRecordExists(Guid id)
-        {
-            return _context.HealthRecords.Any(e => e.Id == id);
-        }
+
     }
 
 }

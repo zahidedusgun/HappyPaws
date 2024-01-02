@@ -10,5 +10,7 @@ namespace HappyPaws.Application.Features.Commands.HealthRecord.CreateHealthRecor
     {
         public bool IsSuccess { get; set; }
         public Guid HealthRecordId { get; set; }
+
+        public int StatusCode { get; set; }
     }
 }
