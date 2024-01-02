@@ -1,5 +1,6 @@
 using HappyPaws.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
+using HappyPaws.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddApplicationServices();
 
 var connectionString = builder.Configuration.GetConnectionString("YetgenPostgreSQL");
 
