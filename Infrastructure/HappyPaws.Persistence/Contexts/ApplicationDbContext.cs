@@ -16,9 +16,9 @@ namespace HappyPaws.Persistence.Contexts
         public DbSet<Adoption> Adoptions { get; set; }
         public DbSet<Pet> Pets { get; set; }
         public DbSet<HealthRecord> HealthRecords { get; set; }
+
         public static List<HealthRecord> HealthRecordList { get; set; } = new List<HealthRecord>();
-
-
+        public static List<Adopter> AdopterList { get; set; } = new List<Adopter>();
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> dbContextOptions) : base(dbContextOptions)
         {
 
@@ -27,6 +27,10 @@ namespace HappyPaws.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.Ignore<User>();
+            modelBuilder.Ignore<Role>();
+            modelBuilder.Ignore<UserSetting>();
 
             base.OnModelCreating(modelBuilder);
         }
