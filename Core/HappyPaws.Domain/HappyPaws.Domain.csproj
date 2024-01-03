@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.14" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HappyPaws.Application\HappyPaws.Application.csproj" />
+  </ItemGroup>
+
 </Project>
