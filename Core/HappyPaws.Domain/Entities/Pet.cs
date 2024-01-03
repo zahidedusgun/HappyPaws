@@ -22,7 +22,7 @@ namespace HappyPaws.Domain.Entities
         public Guid AdopterId { get; set; }
 
         public ICollection<Adoption> Adoptions { get; set; }
-        public ICollection<HealthRecord> HealthRecords { get;}
+        public ICollection<HealthRecord> HealthRecords { get; set;}
     }
 
 }
