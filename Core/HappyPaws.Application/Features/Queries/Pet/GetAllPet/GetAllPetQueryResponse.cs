@@ -1,14 +1,15 @@
-﻿using System;
+﻿using HappyPaws.Domain.Entities;
+using HappyPaws.Domain.Common;
+using HappyPaws.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HappyPaws.Domain.Common;
-using HappyPaws.Domain.Enums;
 
-namespace HappyPaws.Domain.Entities
+namespace HappyPaws.Application.Features.Queries.Pet.GetAllPet
 {
-    public class Pet : EntityBase<Guid>
+    public class GetAllPetQueryResponse
     {
         public string Name { get; set; }
         public string Type { get; set; }
@@ -17,12 +18,8 @@ namespace HappyPaws.Domain.Entities
         public Gender Gender { get; set; }
         public AdoptionStatus AdoptionStatus { get; set; }
         public DateTime CreatedDate { get; set; }
-
         public Adopter Adopter { get; set; }
         public Guid AdopterId { get; set; }
-
         public ICollection<Adoption> Adoptions { get; set; }
-        public ICollection<HealthRecord> HealthRecords { get; set;}
     }
-
 }

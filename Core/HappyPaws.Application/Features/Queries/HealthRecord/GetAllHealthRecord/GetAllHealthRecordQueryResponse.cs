@@ -13,7 +13,7 @@ namespace HappyPaws.Application.Features.Queries.HealthRecord.GetAllHealthRecord
         public string Description { get; set; }
         public DateTime VetVisitDate { get; set; }
         public string VetNotes { get; set; }
-        public Pet Pet { get; set; }
+        public HappyPaws.Domain.Entities.Pet Pet { get; set; }
         public Guid PetId { get; set; }
     }
 }

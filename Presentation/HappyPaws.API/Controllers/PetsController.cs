@@ -3,6 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using HappyPaws.Persistence.Contexts;
 using HappyPaws.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using HappyPaws.Application.Features.Commands.Pet.CreatePet;
+using HappyPaws.Application.Features.Commands.Pet.RemovePet;
+using HappyPaws.Application.Features.Commands.Pet.UpdatePet;
+using HappyPaws.Application.Features.Queries.Pet.GetAllPet;
+using HappyPaws.Application.Features.Queries.Pet.GetByIdPet;
+using MediatR;
 
 namespace HappyPaws.API.Controllers
 {
@@ -10,95 +16,52 @@ namespace HappyPaws.API.Controllers
     [ApiController]
     public class PetsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMediator _mediator;
 
-        public PetsController(ApplicationDbContext context)
+        public PetsController(IMediator mediator)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Pet>>> GetPets()
+        public async Task<IActionResult> Get([FromQuery] GetAllPetQueryRequest getAllPetQueryRequest)
         {
-            var pets = await _context.Pets.ToListAsync();
-            return Ok(pets);
+            var requestResponse = await _mediator.Send(getAllPetQueryRequest);
+
+            return Ok(requestResponse);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Pet>> GetPet(Guid id)
+        public async Task<IActionResult> Get([FromRoute] GetByIdPetQueryRequest getByIdPetQueryRequest)
         {
-            if (id == null)
-                return BadRequest("Id cannot be empty");
-
-            var pet = await _context.Pets.FindAsync(id);
-
-            if (pet is null)
-                return NotFound("The pet requested with given Id was not found");
-
-
-            return Ok(pet);
+            return Ok(await _mediator.Send(getByIdPetQueryRequest));
         }
 
         [HttpPost]
-        public async Task<ActionResult<Pet>> CreatePet([FromBody] Pet pet)
+        public async Task<IActionResult> Post(CreatePetCommandRequest createPetCommandRequest)
         {
-            if (pet is null)
-                return BadRequest();
+            var requestResponse = await _mediator.Send(createPetCommandRequest);
 
-            _context.Pets.Add(pet);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetPet), new { id = pet.Id }, pet);
+            return Ok(StatusCode(requestResponse.StatusCode));
         }
 
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePet(Guid id, [FromBody] Pet pet)
+        public async Task<IActionResult> Put([FromBody] UpdatePetCommandRequest updatePetCommandRequest)
         {
-            if (pet == null || id != pet.Id)
-            {
-                return BadRequest();
-            }
+            await _mediator.Send(updatePetCommandRequest);
 
-            _context.Entry(pet).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PetExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePet(Guid id)
+        public async Task<IActionResult> Delete([FromRoute] RemovePetCommandRequest removePetCommandRequest)
         {
-            var pet = await _context.Pets.FindAsync(id);
+            await _mediator.Send(removePetCommandRequest);
 
-            if (pet == null)
-            {
-                return NotFound();
-            }
-
-            _context.Pets.Remove(pet);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok();
         }
 
-        private bool PetExists(Guid id)
-        {
-            return _context.Pets.Any(e => e.Id == id);
-        }
+
     }
 }
