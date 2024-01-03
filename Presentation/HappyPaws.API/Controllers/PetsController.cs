@@ -14,17 +14,17 @@ namespace HappyPaws.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PetController : ControllerBase
+    public class PetsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public PetController(IMediator mediator)
+        public PetsController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(GetAllPetQueryRequest getAllPetQueryRequest)
+        public async Task<IActionResult> Get([FromQuery] GetAllPetQueryRequest getAllPetQueryRequest)
         {
             var requestResponse = await _mediator.Send(getAllPetQueryRequest);
 
