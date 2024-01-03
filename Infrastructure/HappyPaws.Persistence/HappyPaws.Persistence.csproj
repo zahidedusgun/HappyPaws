@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\HappyPaws.Application\HappyPaws.Application.csproj" />
     <ProjectReference Include="..\..\Core\HappyPaws.Domain\HappyPaws.Domain.csproj" />
   </ItemGroup>
 
