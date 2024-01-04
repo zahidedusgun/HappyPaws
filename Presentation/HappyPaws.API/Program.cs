@@ -1,21 +1,26 @@
-using System.Text;
+using FluentValidation.AspNetCore;
+using HappyPaws.API.Models;
+using HappyPaws.API.Models.Validators;
 using HappyPaws.API.Services;
 using HappyPaws.Domain.Identity;
 using HappyPaws.Persistence.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using HappyPaws.Application;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-
+using System;
+using System.Text;
+using HappyPaws.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
@@ -23,18 +28,15 @@ builder.Services.AddScoped<TokenService>();
 
 var connectionString = builder.Configuration.GetConnectionString("YetgenPostgreSQL");
 
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(connectionString);
 });
 
-builder.Services
-    .AddDbContext<IdentityDbContext>(options =>
-    {
-        options.UseNpgsql(connectionString);
-    });
-
+builder.Services.AddDbContext<IdentityDbContext>(options =>
+{
+    options.UseNpgsql(connectionString);
+});
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -54,16 +56,17 @@ builder.Services
             ),
         };
     });
+
 builder.Services.AddIdentityCore<User>(options =>
-    {
-        options.SignIn.RequireConfirmedAccount = false;
-        options.User.RequireUniqueEmail = true;
-        options.Password.RequireDigit = false;
-        options.Password.RequiredLength = 2;
-        options.Password.RequireNonAlphanumeric = false;
-        options.Password.RequireUppercase = false;
-        options.Password.RequireLowercase = false;
-    })
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.User.RequireUniqueEmail = true;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 2;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+})
     .AddEntityFrameworkStores<IdentityDbContext>();
 
 builder.Services.AddSwaggerGen(option =>
@@ -94,13 +97,16 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
+builder.Services.AddControllersWithViews()
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AuthRequestValidator>()
+                                   .RegisterValidatorsFromAssemblyContaining<AuthResponseValidator>()
+                                   .RegisterValidatorsFromAssemblyContaining<RegistrationRequestValidator>());
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    
     app.UseSwaggerUI();
 }
 
