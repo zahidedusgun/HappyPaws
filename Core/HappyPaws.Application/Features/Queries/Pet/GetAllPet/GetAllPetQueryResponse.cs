@@ -20,6 +20,6 @@ namespace HappyPaws.Application.Features.Queries.Pet.GetAllPet
         public DateTime CreatedDate { get; set; }
         public Adopter Adopter { get; set; }
         public Guid AdopterId { get; set; }
-        public ICollection<Adoption> Adoptions { get; set; }
+        public ICollection<HappyPaws.Domain.Entities.Adoption> Adoptions { get; set; }
     }
 }

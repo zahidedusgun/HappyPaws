@@ -21,6 +21,6 @@ namespace HappyPaws.Application.Features.Queries.Pet.GetByIdPet
         public Adopter Adopter { get; set; }
         public Guid AdopterId { get; set; }
 
-        public ICollection<Adoption> Adoptions { get; set; }
+        public ICollection<HappyPaws.Domain.Entities.Adoption> Adoptions { get; set; }
     }
 }
