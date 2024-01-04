@@ -21,6 +21,7 @@ namespace HappyPaws.Persistence.Contexts
 
         public static List<HealthRecord> HealthRecordList { get; set; } = new List<HealthRecord>();
         public static List<Adopter> AdopterList { get; set; } = new List<Adopter>();
+        public static List<Adoption> AdoptionList { get; set; } = new List<Adoption>();
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> dbContextOptions) : base(dbContextOptions)
         {
 
