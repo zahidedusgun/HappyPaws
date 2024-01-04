@@ -3,6 +3,12 @@ using HappyPaws.Persistence.Contexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using HappyPaws.Application.Features.Commands.Adopter.CreateAdopter;
+using HappyPaws.Application.Features.Commands.Adopter.RemoveAdopter;
+using HappyPaws.Application.Features.Commands.Adopter.UpdateAdopter;
+using HappyPaws.Application.Features.Queries.Adopter.GetAllAdopter;
+using HappyPaws.Application.Features.Queries.Adopter.GetByIdAdopter;
+using MediatR;
 
 namespace HappyPaws.API.Controllers
 {
@@ -10,94 +16,50 @@ namespace HappyPaws.API.Controllers
     [ApiController]
     public class AdopterController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMediator _mediator;
 
-        public AdopterController(ApplicationDbContext context)
+        public AdopterController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAdopters()
+        public async Task<IActionResult> Get([FromQuery] GetAllAdopterQueryRequest getAllAdopterQueryRequest)
         {
-            var adopters = await _context.Adopters.ToListAsync();
-            return Ok(adopters);
+            var requestResponse = await _mediator.Send(getAllAdopterQueryRequest);
+
+            return Ok(requestResponse);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAdopterById(Guid id)
+        public async Task<IActionResult> Get([FromRoute] GetByIdAdopterQueryRequest getByIdAdopterQueryRequest)
         {
-            var adopter = await _context.Adopters.FindAsync(id);
-
-            if (adopter == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(adopter);
+            return Ok(await _mediator.Send(getByIdAdopterQueryRequest));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAdopter([FromBody] Adopter adopter)
+        public async Task<IActionResult> Post(CreateAdopterCommandRequest createAdopterCommandRequest)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Adopters.Add(adopter);
-                await _context.SaveChangesAsync();
+            var requestResponse = await _mediator.Send(createAdopterCommandRequest);
 
-                return CreatedAtAction(nameof(GetAdopterById), new { id = adopter.Id }, adopter);
-            }
-
-            return BadRequest(ModelState);
+            return Ok(StatusCode(requestResponse.StatusCode));
         }
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAdopter(Guid id, [FromBody] Adopter updatedAdopter)
+        public async Task<IActionResult> Put([FromBody] UpdateAdopterCommandRequest updateAdopterCommandRequest)
         {
-            if (id != updatedAdopter.Id)
-            {
-                return BadRequest();
-            }
+            await _mediator.Send(updateAdopterCommandRequest);
 
-            _context.Entry(updatedAdopter).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AdopterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAdopter(Guid id)
+        public async Task<IActionResult> Delete([FromRoute] RemoveAdopterCommandRequest removeAdopterCommandRequest)
         {
-            var adopter = await _context.Adopters.FindAsync(id);
+            await _mediator.Send(removeAdopterCommandRequest);
 
-            if (adopter == null)
-            {
-                return NotFound();
-            }
-
-            _context.Adopters.Remove(adopter);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok();
         }
 
-        private bool AdopterExists(Guid id)
-        {
-            return _context.Adopters.Any(e => e.Id == id);
-        }
     }
 }
