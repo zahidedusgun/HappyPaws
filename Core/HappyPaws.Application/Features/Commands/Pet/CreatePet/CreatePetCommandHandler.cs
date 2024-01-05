@@ -28,6 +28,9 @@ namespace HappyPaws.Application.Features.Commands.Pet.CreatePet
                 Breed = request.Breed,
                 Age = request.Age,
                 Gender = request.Gender,
+                CreatedByUserId = "halaymaster",
+                IsDeleted = false,
+                AdopterId = request.AdopterId
             });
 
             return new CreatePetCommandResponse

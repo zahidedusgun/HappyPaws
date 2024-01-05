@@ -16,5 +16,7 @@ namespace HappyPaws.Application.Features.Commands.Pet.CreatePet
         public string Breed { get; set; }
         public short Age { get; set; }
         public Gender Gender { get; set; }
+        public Guid AdopterId { get; set; }
+
     }
 }

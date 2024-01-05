@@ -25,6 +25,8 @@ namespace HappyPaws.Application.Features.Commands.Adoption.CreateAdoption
                 AdoptionDate = DateTime.UtcNow,
                 AdoptionNotes = request.AdoptionNotes,
                 AdoptionStatus = request.AdoptionStatus,
+                CreatedByUserId = "halaymaster",
+                IsDeleted = false
             });
 
             await _context.SaveChangesAsync();

@@ -25,7 +25,9 @@ namespace HappyPaws.Application.Features.Commands.Adopter.CreateAdopter
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
-                PhoneNumber = request.PhoneNumber
+                PhoneNumber = request.PhoneNumber,
+                CreatedByUserId = "halaymaster",
+                IsDeleted= false
             });
 
             return new CreateAdopterCommandResponse

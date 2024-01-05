@@ -22,11 +22,12 @@ namespace HappyPaws.Application.Features.Commands.HealthRecord.CreateHealthRecor
             var id = Guid.NewGuid();
             _context.HealthRecords.Add(new()
             {
-                RecordDate = DateTime.Now,
+                RecordDate = DateTime.UtcNow,
                 Description = request.Description,
                 VetVisitDate = request.VetVisitDate,
                 VetNotes = request.VetNotes,
-
+                CreatedByUserId = "halaymaster",
+                IsDeleted = false
 
             });
 
