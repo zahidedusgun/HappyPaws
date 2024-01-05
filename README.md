@@ -1,6 +1,6 @@
 # Happy Paws
 # Team 6 Happy Paws Project
-- This repository contains the HELZFashion project provided by YetGen Jump & Akbank Backend Education Program. 
+- This repository contains the Happy Paws project provided by YetGen Jump & Akbank Backend Education Program. 
 - The details of the project, which we completed as Team 6, are provided below: ⇓
 
 ## Ozge's part [![Ozge](https://img.shields.io/badge/Ozge-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ozgedincer)
