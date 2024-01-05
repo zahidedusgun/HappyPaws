@@ -17,16 +17,19 @@ namespace HappyPaws.API.Controllers
     public class AdopterController : ControllerBase
     {
         private readonly IMediator _mediator;
-
-        public AdopterController(IMediator mediator)
+        private readonly ApplicationDbContext _context;
+        public AdopterController(IMediator mediator, ApplicationDbContext context)
         {
             _mediator = mediator;
+            _context = context;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetAllAdopterQueryRequest getAllAdopterQueryRequest)
         {
             var requestResponse = await _mediator.Send(getAllAdopterQueryRequest);
+
+            await _context.SaveChangesAsync();
 
             return Ok(requestResponse);
         }
@@ -41,6 +44,8 @@ namespace HappyPaws.API.Controllers
         public async Task<IActionResult> Post(CreateAdopterCommandRequest createAdopterCommandRequest)
         {
             var requestResponse = await _mediator.Send(createAdopterCommandRequest);
+
+            await _context.SaveChangesAsync();
 
             return Ok(StatusCode(requestResponse.StatusCode));
         }

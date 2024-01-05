@@ -16,12 +16,12 @@ namespace HappyPaws.Persistence.Contexts
         public DbSet<Adoption> Adoptions { get; set; }
         public DbSet<Pet> Pets { get; set; }
         public DbSet<HealthRecord> HealthRecords { get; set; }
-        public static List<Pet> PetList { get; set; } = new List<Pet>();
+        //public DbSet<List<Pet>> PetList { get; set; } 
 
 
-        public static List<HealthRecord> HealthRecordList { get; set; } = new List<HealthRecord>();
-        public static List<Adopter> AdopterList { get; set; } = new List<Adopter>();
-        public static List<Adoption> AdoptionList { get; set; } = new List<Adoption>();
+        //public static List<HealthRecord> HealthRecordList { get; set; } = new List<HealthRecord>();
+        //public static List<Adopter> AdopterList { get; set; } = new List<Adopter>();
+        //public static List<Adoption> AdoptionList { get; set; } = new List<Adoption>();
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> dbContextOptions) : base(dbContextOptions)
         {
 

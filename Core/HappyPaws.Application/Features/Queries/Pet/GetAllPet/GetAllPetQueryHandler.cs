@@ -11,9 +11,15 @@ namespace HappyPaws.Application.Features.Queries.Pet.GetAllPet
 {
     public class GetAllPetQueryHandler : IRequestHandler<GetAllPetQueryRequest, List<GetAllPetQueryResponse>>
     {
+        private readonly ApplicationDbContext _context;
+
+        public GetAllPetQueryHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<List<GetAllPetQueryResponse>> Handle(GetAllPetQueryRequest request, CancellationToken cancellationToken)
         {
-            return ApplicationDbContext.PetList.Select(pet => new GetAllPetQueryResponse
+            return _context.Pets.Select(pet => new GetAllPetQueryResponse
             {
                 Name = pet.Name,
                 Type = pet.Type,

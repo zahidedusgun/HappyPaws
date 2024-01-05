@@ -10,9 +10,15 @@ namespace HappyPaws.Application.Features.Queries.HealthRecord.GetAllHealthRecord
 {
     public class GetAllHealthRecordQueryHandler:IRequestHandler<GetAllHealthRecordQueryRequest, List<GetAllHealthRecordQueryResponse>>
     {
+        private readonly ApplicationDbContext _context;
+
+        public GetAllHealthRecordQueryHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<List<GetAllHealthRecordQueryResponse>> Handle(GetAllHealthRecordQueryRequest request, CancellationToken cancellationToken)
         {
-            return ApplicationDbContext.HealthRecordList.Select(healthRecord => new GetAllHealthRecordQueryResponse
+            return _context.HealthRecords.Select(healthRecord => new GetAllHealthRecordQueryResponse
             {
                 RecordDate = healthRecord.RecordDate,
                 Description = healthRecord.Description,

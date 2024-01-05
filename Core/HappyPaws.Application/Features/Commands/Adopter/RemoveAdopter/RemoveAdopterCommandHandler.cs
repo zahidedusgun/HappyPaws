@@ -10,10 +10,16 @@ namespace HappyPaws.Application.Features.Commands.Adopter.RemoveAdopter
 {
     public class RemoveAdopterCommandHandler : IRequestHandler<RemoveAdopterCommandRequest, RemoveAdopterCommandResponse>
     {
+        private readonly ApplicationDbContext _context;
+
+        public RemoveAdopterCommandHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<RemoveAdopterCommandResponse> Handle(RemoveAdopterCommandRequest request, CancellationToken cancellationToken)
         {
-            var removeAdopter = ApplicationDbContext.AdopterList.FirstOrDefault(x => x.Id == request.AdopterId);
-            ApplicationDbContext.AdopterList.Remove(removeAdopter);
+            var removeAdopter = _context.Adopters.FirstOrDefault(x => x.Id == request.AdopterId);
+            _context.Adopters.Remove(removeAdopter);
 
             return new RemoveAdopterCommandResponse
             {

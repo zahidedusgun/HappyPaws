@@ -9,11 +9,17 @@ using System.Threading.Tasks;
 
 namespace HappyPaws.Application.Features.Queries.Pet.GetByIdPet
 {
-    public class GetByIdHealthRecordQueryHandler : IRequestHandler<GetByIdPetQueryRequest, GetByIdPetQueryResponse>
+    public class GetByIdPetQueryHandler : IRequestHandler<GetByIdPetQueryRequest, GetByIdPetQueryResponse>
     {
+        private readonly ApplicationDbContext _context;
+
+        public GetByIdPetQueryHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<GetByIdPetQueryResponse> Handle(GetByIdPetQueryRequest request, CancellationToken cancellationToken)
         {
-            var pet = ApplicationDbContext.PetList.FirstOrDefault(pet =>
+            var pet = _context.Pets.FirstOrDefault(pet =>
                 pet.Id == request.Id);
             return new GetByIdPetQueryResponse
             {

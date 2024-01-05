@@ -10,12 +10,18 @@ namespace HappyPaws.Application.Features.Commands.HealthRecord.RemoveHealthRecor
 {
     public class RemoveHealthRecordCommandHandler:IRequestHandler<RemoveHealthRecordCommandRequest, RemoveHealthRecordCommandResponse> 
     {
+        private readonly ApplicationDbContext _context;
+
+        public RemoveHealthRecordCommandHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<RemoveHealthRecordCommandResponse> Handle(RemoveHealthRecordCommandRequest request, CancellationToken cancellationToken)
         {
             var removeHealthRecord =
-                ApplicationDbContext.HealthRecordList.FirstOrDefault(hr =>
+                _context.HealthRecords.FirstOrDefault(hr =>
                     hr.Id == request.Id);
-            ApplicationDbContext.HealthRecordList.Remove(removeHealthRecord);
+            _context.HealthRecords.Remove(removeHealthRecord);
             return new RemoveHealthRecordCommandResponse
             {
                 IsSuccess = true

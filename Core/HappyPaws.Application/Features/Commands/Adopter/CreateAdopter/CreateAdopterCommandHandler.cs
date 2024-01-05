@@ -11,10 +11,16 @@ namespace HappyPaws.Application.Features.Commands.Adopter.CreateAdopter
 {
     public class CreateAdopterCommandHandler : IRequestHandler<CreateAdopterCommandRequest, CreateAdopterCommandResponse>
     {
+        private readonly ApplicationDbContext _context;
+
+        public CreateAdopterCommandHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<CreateAdopterCommandResponse> Handle(CreateAdopterCommandRequest request, CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid();
-            ApplicationDbContext.AdopterList.Add(new()
+            _context.Adopters.Add(new()
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,

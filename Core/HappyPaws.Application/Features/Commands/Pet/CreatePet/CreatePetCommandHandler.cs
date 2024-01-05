@@ -12,10 +12,16 @@ namespace HappyPaws.Application.Features.Commands.Pet.CreatePet
 {
     public class CreatePetCommandHandler : IRequestHandler<CreatePetCommandRequest, CreatePetCommandResponse>
     {
+        private readonly ApplicationDbContext _context;
+
+        public CreatePetCommandHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<CreatePetCommandResponse> Handle(CreatePetCommandRequest request, CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid();
-            ApplicationDbContext.PetList.Add(new()
+            _context.Pets.Add(new()
             {
                 Name = request.Name,
                 Type = request.Type,

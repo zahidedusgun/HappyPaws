@@ -15,7 +15,7 @@ namespace HappyPaws.Application.Features.Queries.Adoption.GetByIdAdoption
         public AdoptionStatus AdoptionStatus { get; set; }
         public HappyPaws.Domain.Entities.Pet Pet { get; set; }
         public Guid PetId { get; set; }
-        public Adopter Adopter { get; set; }
+        public Domain.Entities.Adopter Adopter { get; set; }
         public Guid AdopterId { get; set; }
     }
 }
