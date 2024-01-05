@@ -1,4 +1,4 @@
-#Happy Paws
+# Happy Paws
 # Team 6 Happy Paws Project
 - This repository contains the HELZFashion project provided by YetGen Jump & Akbank Backend Education Program. 
 - The details of the project, which we completed as Team 6, are provided below: ⇓
