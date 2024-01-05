@@ -17,6 +17,6 @@
 ## Bahar's Part  [![Bahar](https://img.shields.io/badge/Bahar-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/baharerol)
 - 
 
-## Halime Elif's Part  [![Halime Elif](https://img.shields.io/badge/Halime Elif-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/utopica)
+## Halime Elif's Part  [![Halime Elif](https://img.shields.io/badge/Elif-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/utopica)
 
 ## Issues and Solutions
