@@ -2,6 +2,7 @@
 using HappyPaws.Application.Features.Commands.Adoption.RemoveAdoption;
 using HappyPaws.Application.Features.Commands.Adoption.UpdateAdoption;
 using HappyPaws.Application.Features.Queries.Adoption.GetAllAdoption;
+using HappyPaws.Application.Features.Queries.Adoption.GetByIdAdoption;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

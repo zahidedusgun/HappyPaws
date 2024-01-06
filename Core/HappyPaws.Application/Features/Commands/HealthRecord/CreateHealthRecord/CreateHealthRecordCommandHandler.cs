@@ -11,18 +11,27 @@ namespace HappyPaws.Application.Features.Commands.HealthRecord.CreateHealthRecor
 {
     public class CreateHealthRecordCommandHandler:IRequestHandler<CreateHealthRecordCommandRequest, CreateHealthRecordCommandResponse>
     {
+        private readonly ApplicationDbContext _context;
+
+        public CreateHealthRecordCommandHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<CreateHealthRecordCommandResponse> Handle(CreateHealthRecordCommandRequest request, CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid();
-            ApplicationDbContext.HealthRecordList.Add(new()
+            _context.HealthRecords.Add(new()
             {
-                RecordDate = DateTime.Now,
+                RecordDate = DateTime.UtcNow,
                 Description = request.Description,
                 VetVisitDate = request.VetVisitDate,
                 VetNotes = request.VetNotes,
-
-
+                CreatedByUserId = "halaymaster",
+                IsDeleted = false,
             });
+
+            await _context.SaveChangesAsync();
+
 
             return new CreateHealthRecordCommandResponse
             {

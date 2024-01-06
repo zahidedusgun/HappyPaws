@@ -11,15 +11,25 @@ namespace HappyPaws.Application.Features.Commands.Adoption.CreateAdoption
 {
     public class CreateAdoptionCommandHandler : IRequestHandler<CreateAdoptionCommandRequest, CreateAdoptionCommandResponse>
     {
+        private readonly ApplicationDbContext _context;
+
+        public CreateAdoptionCommandHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<CreateAdoptionCommandResponse> Handle(CreateAdoptionCommandRequest request, CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid();
-            ApplicationDbContext.AdoptionList.Add(new()
+            _context.Adoptions.Add(new()
             {
-                AdoptionDate = DateTime.Now,
+                AdoptionDate = DateTime.UtcNow,
                 AdoptionNotes = request.AdoptionNotes,
                 AdoptionStatus = request.AdoptionStatus,
+                CreatedByUserId = "halaymaster",
+                IsDeleted = false
             });
+
+            await _context.SaveChangesAsync();
 
             return new CreateAdoptionCommandResponse
             {

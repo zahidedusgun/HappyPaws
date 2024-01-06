@@ -12,9 +12,15 @@ namespace HappyPaws.Application.Features.Queries.Adopter.GetAllAdopter
 {
     public class GetAllAdopterQueryHandler : IRequestHandler<GetAllAdopterQueryRequest, List<GetAllAdopterQueryResponse>>
     {
+        private readonly ApplicationDbContext _context;
+
+        public GetAllAdopterQueryHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<List<GetAllAdopterQueryResponse>> Handle(GetAllAdopterQueryRequest request, CancellationToken cancellationToken)
         {
-            return ApplicationDbContext.AdopterList.Select(adopter => new GetAllAdopterQueryResponse
+            return _context.Adopters.Select(adopter => new GetAllAdopterQueryResponse
             {
                 FirstName = adopter.FirstName,
                 LastName = adopter.LastName,

@@ -42,7 +42,7 @@ namespace HappyPaws.API.Controllers
         {
             var requestResponse = await _mediator.Send(createPetCommandRequest);
 
-            return Ok(StatusCode(requestResponse.StatusCode));
+            return Ok(requestResponse);
         }
 
 

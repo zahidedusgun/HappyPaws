@@ -10,9 +10,15 @@ namespace HappyPaws.Application.Features.Queries.Adoption.GetAllAdoption
 {
     public class GetAllAdoptionQueryHandler : IRequestHandler<GetAllAdoptionQueryRequest, List<GetAllAdoptionQueryResponse>>
     {
+        private readonly ApplicationDbContext _context;
+
+        public GetAllAdoptionQueryHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<List<GetAllAdoptionQueryResponse>> Handle(GetAllAdoptionQueryRequest request, CancellationToken cancellationToken)
         {
-            return ApplicationDbContext.AdoptionList.Select(adoption => new GetAllAdoptionQueryResponse
+            return _context.Adoptions.Select(adoption => new GetAllAdoptionQueryResponse
             {
                 AdoptionDate = adoption.AdoptionDate,
                 AdoptionNotes = adoption.AdoptionNotes,

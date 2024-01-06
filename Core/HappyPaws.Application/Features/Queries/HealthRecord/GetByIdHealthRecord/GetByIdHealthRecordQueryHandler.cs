@@ -11,9 +11,15 @@ namespace HappyPaws.Application.Features.Queries.HealthRecord.GetByIdHealthRecor
 {
     public class GetByIdHealthRecordQueryHandler : IRequestHandler<GetByIdHealthRecordQueryRequest, GetByIdHealthRecordQueryResponse>
     {
+        private readonly ApplicationDbContext _context;
+
+        public GetByIdHealthRecordQueryHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<GetByIdHealthRecordQueryResponse> Handle(GetByIdHealthRecordQueryRequest request, CancellationToken cancellationToken)
         {
-            var healthRecord = ApplicationDbContext.HealthRecordList.FirstOrDefault(hr =>
+            var healthRecord = _context.HealthRecords.FirstOrDefault(hr =>
                 hr.Id == request.Id);
             return new GetByIdHealthRecordQueryResponse
             {

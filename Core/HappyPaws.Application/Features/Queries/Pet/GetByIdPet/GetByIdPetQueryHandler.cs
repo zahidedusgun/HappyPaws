@@ -9,21 +9,34 @@ using System.Threading.Tasks;
 
 namespace HappyPaws.Application.Features.Queries.Pet.GetByIdPet
 {
-    public class GetByIdHealthRecordQueryHandler : IRequestHandler<GetByIdPetQueryRequest, GetByIdPetQueryResponse>
+    public class GetByIdPetQueryHandler : IRequestHandler<GetByIdPetQueryRequest, GetByIdPetQueryResponse>
     {
+        private readonly ApplicationDbContext _context;
+
+        public GetByIdPetQueryHandler(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public async Task<GetByIdPetQueryResponse> Handle(GetByIdPetQueryRequest request, CancellationToken cancellationToken)
         {
-            var pet = ApplicationDbContext.PetList.FirstOrDefault(pet =>
-                pet.Id == request.Id);
-            return new GetByIdPetQueryResponse
+            Domain.Entities.Pet? pet = _context.Pets.FirstOrDefault(pet =>
+                pet.Id.ToString() == request.Id);
+
+            if (pet is not null)
             {
-                Name = pet.Name,
-                Type = pet.Type,
-                Breed = pet.Breed,
-                Age = pet.Age,
-                Gender = pet.Gender,
-                CreatedDate = pet.CreatedDate,
-            };
+                return new GetByIdPetQueryResponse
+                {
+                    Name = pet.Name,
+                    Type = pet.Type,
+                    Breed = pet.Breed,
+                    Age = pet.Age,
+                    Gender = pet.Gender,
+                    CreatedDate = pet.CreatedDate,
+                };
+            }
+            return new GetByIdPetQueryResponse();
+
+            
         }
     }
 }
