@@ -17,25 +17,21 @@ namespace HappyPaws.API.Controllers
     public class HealthRecordsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ApplicationDbContext _context;
 
         public HealthRecordsController(IMediator mediator, ApplicationDbContext context)
         {
             _mediator = mediator;
-            _context = context;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetAllHealthRecordQueryRequest getAllHealthRecordQueryRequest)
         {
             var requestResponse = await _mediator.Send(getAllHealthRecordQueryRequest);
-            await _context.SaveChangesAsync();
-
             return Ok(requestResponse);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] GetByIdHealthRecordQueryRequest getByIdHealthRecordQueryRequest)
+        public async Task<IActionResult> Get([FromQuery] GetByIdHealthRecordQueryRequest getByIdHealthRecordQueryRequest)
         {
             return Ok(await _mediator.Send(getByIdHealthRecordQueryRequest));
         }
@@ -45,9 +41,7 @@ namespace HappyPaws.API.Controllers
         {
             var requestResponse = await _mediator.Send(createHealthRecordCommandRequest);
 
-            await _context.SaveChangesAsync();
-
-            return Ok(StatusCode(requestResponse.StatusCode));
+            return Ok(requestResponse);
         }
 
 
@@ -71,4 +65,3 @@ namespace HappyPaws.API.Controllers
     }
 
 }
-

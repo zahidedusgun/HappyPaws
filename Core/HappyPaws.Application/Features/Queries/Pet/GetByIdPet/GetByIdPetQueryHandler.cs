@@ -1,6 +1,7 @@
 ﻿using HappyPaws.Application.Features.Queries.Pet.GetByIdPet;
 using HappyPaws.Persistence.Contexts;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,9 @@ namespace HappyPaws.Application.Features.Queries.Pet.GetByIdPet
         }
         public async Task<GetByIdPetQueryResponse> Handle(GetByIdPetQueryRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Pet? pet = _context.Pets.FirstOrDefault(pet =>
+
+            Domain.Entities.Pet? pet = await _context.Pets.FirstOrDefaultAsync(pet =>
+
                 pet.Id.ToString() == request.Id);
 
             if (pet is not null)
@@ -36,7 +39,7 @@ namespace HappyPaws.Application.Features.Queries.Pet.GetByIdPet
             }
             return new GetByIdPetQueryResponse();
 
-            
+
         }
     }
 }
