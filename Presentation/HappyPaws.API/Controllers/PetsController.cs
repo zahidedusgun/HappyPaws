@@ -9,6 +9,8 @@ using HappyPaws.Application.Features.Commands.Pet.UpdatePet;
 using HappyPaws.Application.Features.Queries.Pet.GetAllPet;
 using HappyPaws.Application.Features.Queries.Pet.GetByIdPet;
 using MediatR;
+using Microsoft.Extensions.Caching.Memory;
+using HappyPaws.API.Services;
 
 namespace HappyPaws.API.Controllers
 {
@@ -17,12 +19,25 @@ namespace HappyPaws.API.Controllers
     public class PetsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ApplicationDbContext _context;
+        private readonly FakeDataService _fakeDataService;
+        private ApplicationDbContext _context;
+        private readonly IMemoryCache _memoryCache;
+        private readonly MemoryCacheEntryOptions _cacheEntryOptions;
+        private const string PetsCacheKey = "petsList";
 
-        public PetsController(IMediator mediator, ApplicationDbContext context)
+        public PetsController(IMediator mediator, FakeDataService fakeDataService, ApplicationDbContext context, IMemoryCache memoryCache)
         {
             _mediator = mediator;
+            _fakeDataService = fakeDataService;
             _context = context;
+            _memoryCache = memoryCache;
+
+            _cacheEntryOptions = new MemoryCacheEntryOptions()
+            {
+                Priority = CacheItemPriority.High,
+                AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(30),
+
+            };
         }
 
         [HttpGet]
@@ -66,6 +81,18 @@ namespace HappyPaws.API.Controllers
             return Ok();
         }
 
+        [HttpPost("GenerateFakeData")]
+        public async Task<IActionResult> GenerateFakeData(CancellationToken cancellationToken)
+        {
+            await _fakeDataService.GeneratePetDataAsync(cancellationToken);
 
+            var pets = await _context
+                .Pets.AsNoTracking()
+                .ToListAsync();
+
+            _memoryCache.Set(PetsCacheKey, pets, _cacheEntryOptions);
+
+            return Ok(await _fakeDataService.GeneratePetDataAsync(cancellationToken));
+        }
     }
 }
