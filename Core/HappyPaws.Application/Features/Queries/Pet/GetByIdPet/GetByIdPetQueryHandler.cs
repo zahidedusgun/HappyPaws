@@ -19,17 +19,24 @@ namespace HappyPaws.Application.Features.Queries.Pet.GetByIdPet
         }
         public async Task<GetByIdPetQueryResponse> Handle(GetByIdPetQueryRequest request, CancellationToken cancellationToken)
         {
-            var pet = _context.Pets.FirstOrDefault(pet =>
-                pet.Id == request.Id);
-            return new GetByIdPetQueryResponse
+            Domain.Entities.Pet? pet = _context.Pets.FirstOrDefault(pet =>
+                pet.Id.ToString() == request.Id);
+
+            if (pet is not null)
             {
-                Name = pet.Name,
-                Type = pet.Type,
-                Breed = pet.Breed,
-                Age = pet.Age,
-                Gender = pet.Gender,
-                CreatedDate = pet.CreatedDate,
-            };
+                return new GetByIdPetQueryResponse
+                {
+                    Name = pet.Name,
+                    Type = pet.Type,
+                    Breed = pet.Breed,
+                    Age = pet.Age,
+                    Gender = pet.Gender,
+                    CreatedDate = pet.CreatedDate,
+                };
+            }
+            return new GetByIdPetQueryResponse();
+
+            
         }
     }
 }

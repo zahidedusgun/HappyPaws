@@ -17,12 +17,10 @@ namespace HappyPaws.API.Controllers
     public class PetsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ApplicationDbContext _context;
 
-        public PetsController(IMediator mediator, ApplicationDbContext context)
+        public PetsController(IMediator mediator)
         {
             _mediator = mediator;
-            _context = context;
         }
 
         [HttpGet]
@@ -44,9 +42,7 @@ namespace HappyPaws.API.Controllers
         {
             var requestResponse = await _mediator.Send(createPetCommandRequest);
 
-            await _context.SaveChangesAsync();
-
-            return Ok(StatusCode(requestResponse.StatusCode));
+            return Ok(requestResponse);
         }
 
 

@@ -27,9 +27,11 @@ namespace HappyPaws.Application.Features.Commands.HealthRecord.CreateHealthRecor
                 VetVisitDate = request.VetVisitDate,
                 VetNotes = request.VetNotes,
                 CreatedByUserId = "halaymaster",
-                IsDeleted = false
-
+                IsDeleted = false,
             });
+
+            await _context.SaveChangesAsync();
+
 
             return new CreateHealthRecordCommandResponse
             {
