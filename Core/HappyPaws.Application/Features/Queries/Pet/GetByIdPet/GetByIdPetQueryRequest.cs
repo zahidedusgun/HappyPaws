@@ -10,6 +10,6 @@ namespace HappyPaws.Application.Features.Queries.Pet.GetByIdPet
 {
     public class GetByIdPetQueryRequest : IRequest<GetByIdPetQueryResponse>
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

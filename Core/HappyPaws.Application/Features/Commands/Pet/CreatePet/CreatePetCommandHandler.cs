@@ -20,24 +20,36 @@ namespace HappyPaws.Application.Features.Commands.Pet.CreatePet
         }
         public async Task<CreatePetCommandResponse> Handle(CreatePetCommandRequest request, CancellationToken cancellationToken)
         {
-            var id = Guid.NewGuid();
-            _context.Pets.Add(new()
+            Domain.Entities.Adopter? adopter = _context.Adopters.FirstOrDefault(a=>a.Id==request.AdopterId);
+            if (adopter != null)
             {
-                Name = request.Name,
-                Type = request.Type,
-                Breed = request.Breed,
-                Age = request.Age,
-                Gender = request.Gender,
-                CreatedByUserId = "halaymaster",
-                IsDeleted = false,
-                AdopterId = request.AdopterId
-            });
+                var id = Guid.NewGuid();
+                _context.Pets.Add(new()
+                {
+                    Name = request.Name,
+                    Type = request.Type,
+                    Breed = request.Breed,
+                    Age = request.Age,
+                    Gender = request.Gender,
+                    CreatedByUserId = "halaymaster",
+                    IsDeleted = false,
+                    AdopterId = request.AdopterId
+                });
 
-            return new CreatePetCommandResponse
+                await _context.SaveChangesAsync();
+
+                return new CreatePetCommandResponse
+                {
+                    IsSuccess = true,
+                    PetId = id
+                };
+            }
+            else return new CreatePetCommandResponse
             {
-                IsSuccess = true,
-                PetId = id
+                IsSuccess = false
             };
+
+            
         }
     }
 }

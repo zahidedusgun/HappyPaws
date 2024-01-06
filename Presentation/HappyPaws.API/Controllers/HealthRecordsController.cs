@@ -29,6 +29,7 @@ namespace HappyPaws.API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetAllHealthRecordQueryRequest getAllHealthRecordQueryRequest)
         {
             var requestResponse = await _mediator.Send(getAllHealthRecordQueryRequest);
+            await _context.SaveChangesAsync();
 
             return Ok(requestResponse);
         }

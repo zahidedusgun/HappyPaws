@@ -29,6 +29,7 @@ namespace HappyPaws.Application.Features.Commands.Adopter.CreateAdopter
                 CreatedByUserId = "halaymaster",
                 IsDeleted= false
             });
+            await _context.SaveChangesAsync();
 
             return new CreateAdopterCommandResponse
             {
