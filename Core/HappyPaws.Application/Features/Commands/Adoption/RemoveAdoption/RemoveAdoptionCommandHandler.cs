@@ -1,4 +1,5 @@
-﻿using HappyPaws.Application.Features.Commands.Adoption.RemoveAdoption;
+﻿using HappyPaws.Application.Features.Commands.Adopter.RemoveAdopter;
+using HappyPaws.Application.Features.Commands.Adoption.RemoveAdoption;
 using HappyPaws.Persistence.Contexts;
 using MediatR;
 using System;
@@ -19,14 +20,18 @@ namespace HappyPaws.Application.Features.Commands.Adoption.RemoveAdoption
         }
         public async Task<RemoveAdoptionCommandResponse> Handle(RemoveAdoptionCommandRequest request, CancellationToken cancellationToken)
         {
-            var removeAdoption =
-                _context.Adoptions.FirstOrDefault(adoption =>
-                    adoption.Id == request.Id);
+            Domain.Entities.Adoption? removeAdoption = _context.Adoptions.FirstOrDefault(x => x.Id == request.AdoptionId);
             _context.Adoptions.Remove(removeAdoption);
-            return new RemoveAdoptionCommandResponse
+
+            if (removeAdoption is not null)
             {
-                IsSuccess = true
-            };
+                await _context.SaveChangesAsync();
+                return new RemoveAdoptionCommandResponse
+                {
+                    IsSuccess = true
+                };
+            }
+            else return new RemoveAdoptionCommandResponse { IsSuccess = false };
         }
     }
 }

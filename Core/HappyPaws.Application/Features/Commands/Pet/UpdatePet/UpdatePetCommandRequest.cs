@@ -10,7 +10,7 @@ namespace HappyPaws.Application.Features.Commands.Pet.UpdatePet
 {
     public class UpdatePetCommandRequest : IRequest<UpdatePetCommandResponse>
     {
-        public string Id { get; set; }
+        public string PetId { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public short Age { get; set; }

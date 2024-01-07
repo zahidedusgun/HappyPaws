@@ -9,9 +9,8 @@ namespace HappyPaws.Application.Features.Commands.HealthRecord.UpdateHealthRecor
 {
     public class UpdateHealthRecordCommandRequest: IRequest<UpdateHealthRecordCommandResponse>
     {
-        public string Id { get; set; }
+        public string HealthRecordId { get; set; }
         public string Description { get; set; }
         public string VetNotes { get; set; }
-        public DateTime VetVisitDate { get; set; }
     }
 }

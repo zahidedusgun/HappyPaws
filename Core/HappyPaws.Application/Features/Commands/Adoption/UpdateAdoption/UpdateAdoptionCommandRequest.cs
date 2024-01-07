@@ -10,7 +10,7 @@ namespace HappyPaws.Application.Features.Commands.Adoption.UpdateAdoption
 {
     public class UpdateAdoptionCommandRequest : IRequest<UpdateAdoptionCommandResponse>
     {
-        public string Id { get; set; }
+        public string AdoptionId { get; set; }
         public string AdoptionNotes { get; set; }
         public AdoptionStatus AdoptionStatus { get; set; }
     }
