@@ -34,7 +34,23 @@ The incorporation of CQRS with MediatR has brought notable improvements to our p
 - Alongside the Commands feature, I added Queries for Adopter. I added the ability to view all adopters through the GetAllAdopterQueryHandler and the ability to find an adopter by Id through the GetByIdAdopterQueryHandler.
 
 ## Bahar's Part  [![Bahar](https://img.shields.io/badge/Bahar-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/baharerol)
-- 
+- Initially, we conducted the requirements analysis and visually designed the entities and database relationships for the project.
+
+- The foundational structure of the project has been successfully established with entity, common, and enum structures, and the initial stages of the project have been completed successfully.
+
+- FluentValidation has been added to the created models, ensuring that users adhere to specific rules when registering in the system.
+
+- In our project, I implemented the CQRS pattern for the HealthRecord entity.
+
+  Command Query Responsibility Segregation (CQRS) pattern separates the data mutation, or the command part of a system, from the query part. You can use the CQRS pattern to separate updates and queries if they have different requirements for throughput, latency, or consistency.
+
+- I created separate files in the Applications layer for commands and queries, including Response, Request, and Handler classes.
+
+- While applying the CQRS pattern, I utilized the MediatR library. I designed the HealthRecordsController using the MediatR library and implemented CRUD operations.
+
+  MediatR implements a mediator pattern that helps abstract objects in handling command and query operations within an application. The mediator pattern prevents direct communication between one object and others, reducing dependencies in the system. This allows the code to be more modular, easier to maintain, and testable.
+
+- Throughout the successful completion of the project, effective communication and collaboration among team members played a significant role. Addressing challenges together as a team ensured the project's successful outcome. Additionally, we conducted necessary tests upon project completion, ensuring the accurate and reliable functionality of the application.
 
 ## Halime Elif's Part  [![Halime Elif](https://img.shields.io/badge/Elif-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/utopica)
 
