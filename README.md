@@ -39,3 +39,4 @@ The incorporation of CQRS with MediatR has brought notable improvements to our p
 ## Halime Elif's Part  [![Halime Elif](https://img.shields.io/badge/Elif-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/utopica)
 
 ## Issues and Solutions
+- Regarding the changes in this project, we resolved conflicts that occurred in the files. Additionally, we encountered some difficulties while attempting to use the MediatR library in the CommandHandler files. Through our researches, we made some modifications to eliminate unnecessary information presented to the user, which significantly contributed to the project. Simultaneously, we consistently encountered errors while trying to add adopters, pets, healthrecords and adoptions to the database. We were able to easily resolve this issues, stemming from a foreign key errors, through internet research and collaboratively support each other as a team.
