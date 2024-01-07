@@ -39,7 +39,8 @@ builder.Services.AddScoped<TokenService>();
 
 
 
-var connectionString = builder.Configuration.GetConnectionString("YetgenPostgreSQL");
+
+var connectionString = builder.Configuration["ConnectionStrings:YetgenPostgreSQL"];
 
 builder.Services.AddScoped<FakeDataService>();
 builder.Services.AddMemoryCache();
