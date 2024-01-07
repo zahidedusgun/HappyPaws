@@ -4,7 +4,15 @@
 - The details of the project, which we completed as Team 6, are provided below: ⇓
 
 ## Ozge's part [![Ozge](https://img.shields.io/badge/Ozge-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ozgedincer)
+- The inception of the database design aimed at precisely understanding the project's requisites and establishing a comprehensive framework. A critical aspect involved in this process was the definition of data types and constraints, pivotal for guaranteeing the integrity of the data. The primary focus throughout was on creating a customized database meticulously aligned with the project's specifications.
 - 
+- The foundational structure of the project has been successfully established with entity, common, and enum structures, and the initial stages of the project have been completed successfully.
+- 
+- FluentValidation has been added to the created models, ensuring that users adhere to specific rules when registering in the system.
+- 
+- In our project, I implemented the CQRS pattern using MediatR to enhance the overall architecture. This involved a significant code restructuring to clearly distinguish between commands, responsible for modifying the system's state (e.g., creating, updating, or deleting data), and queries, which handle data retrieval.
+With the integration of MediatR, I established a mediator responsible for facilitating communication between different components of the system. This mediator efficiently dispatches commands or queries to their designated handlers, fostering a more organized and maintainable codebase.
+The incorporation of CQRS with MediatR has brought notable improvements to our project. The clear separation of concerns has not only made the codebase more scalable but also enhanced its maintainability and overall comprehensibility.
 
 
 ## Zahide's Part  [![Zahide](https://img.shields.io/badge/Zahide-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/zahidedusgun)
