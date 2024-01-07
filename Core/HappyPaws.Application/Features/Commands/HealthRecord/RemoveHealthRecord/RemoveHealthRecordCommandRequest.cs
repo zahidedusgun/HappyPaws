@@ -9,6 +9,6 @@ namespace HappyPaws.Application.Features.Commands.HealthRecord.RemoveHealthRecor
 {
     public class RemoveHealthRecordCommandRequest: IRequest<RemoveHealthRecordCommandResponse>
     {
-        public Guid Id { get; set; }
+        public Guid HealthRecordId { get; set; }
     }
 }

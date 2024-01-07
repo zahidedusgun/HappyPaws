@@ -29,9 +29,11 @@ namespace HappyPaws.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] GetByIdAdoptionQueryRequest getByIdAdoptionQueryRequest)
+        public async Task<IActionResult> Get([FromQuery] GetByIdAdoptionQueryRequest getByIdAdoptionQueryRequest)
         {
-            return Ok(await _mediator.Send(getByIdAdoptionQueryRequest));
+            var requestResponse = await _mediator.Send(getByIdAdoptionQueryRequest);
+
+            return Ok(requestResponse);
         }
 
         [HttpPost]
@@ -39,7 +41,7 @@ namespace HappyPaws.API.Controllers
         {
             var requestResponse = await _mediator.Send(createAdoptionCommandRequest);
 
-            return Ok(StatusCode(requestResponse.StatusCode));
+            return Ok(requestResponse);
         }
 
 
@@ -52,7 +54,7 @@ namespace HappyPaws.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] RemoveAdoptionCommandRequest removeAdoptionCommandRequest)
+        public async Task<IActionResult> Delete([FromQuery] RemoveAdoptionCommandRequest removeAdoptionCommandRequest)
         {
             await _mediator.Send(removeAdoptionCommandRequest);
 

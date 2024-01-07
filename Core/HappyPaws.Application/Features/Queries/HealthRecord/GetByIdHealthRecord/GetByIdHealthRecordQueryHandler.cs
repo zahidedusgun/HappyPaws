@@ -1,6 +1,8 @@
 ﻿using HappyPaws.Application.Features.Queries.HealthRecord.GetAllHealthRecord;
+using HappyPaws.Domain.Entities;
 using HappyPaws.Persistence.Contexts;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +21,22 @@ namespace HappyPaws.Application.Features.Queries.HealthRecord.GetByIdHealthRecor
         }
         public async Task<GetByIdHealthRecordQueryResponse> Handle(GetByIdHealthRecordQueryRequest request, CancellationToken cancellationToken)
         {
-            var healthRecord = _context.HealthRecords.FirstOrDefault(hr =>
-                hr.Id == request.Id);
-            return new GetByIdHealthRecordQueryResponse
-            {
-                RecordDate = healthRecord.RecordDate,
-                Description = healthRecord.Description,
-                VetVisitDate = healthRecord.VetVisitDate,
-                VetNotes = healthRecord.VetNotes,
-                Pet = healthRecord.Pet,
-                PetId = healthRecord.PetId
+            Domain.Entities.HealthRecord? healthRecord = await _context.HealthRecords.FirstOrDefaultAsync(hr =>
+                hr.Id.ToString() == request.Id);
 
-            };
+            if (healthRecord is not null)
+            {
+                return new GetByIdHealthRecordQueryResponse
+                {
+                    RecordDate = healthRecord.RecordDate,
+                    Description = healthRecord.Description,
+                    VetVisitDate = healthRecord.VetVisitDate,
+                    VetNotes = healthRecord.VetNotes,
+                    PetId = healthRecord.PetId
+                };
+            }
+            return new GetByIdHealthRecordQueryResponse();
+
         }
     }
 }

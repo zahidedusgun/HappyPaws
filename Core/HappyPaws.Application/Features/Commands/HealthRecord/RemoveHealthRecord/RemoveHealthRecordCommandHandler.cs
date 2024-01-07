@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HappyPaws.Application.Features.Commands.Adopter.RemoveAdopter;
 using HappyPaws.Persistence.Contexts;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace HappyPaws.Application.Features.Commands.HealthRecord.RemoveHealthRecord
 {
@@ -18,14 +20,18 @@ namespace HappyPaws.Application.Features.Commands.HealthRecord.RemoveHealthRecor
         }
         public async Task<RemoveHealthRecordCommandResponse> Handle(RemoveHealthRecordCommandRequest request, CancellationToken cancellationToken)
         {
-            var removeHealthRecord =
-                _context.HealthRecords.FirstOrDefault(hr =>
-                    hr.Id == request.Id);
+            Domain.Entities.HealthRecord? removeHealthRecord = await _context.HealthRecords.FirstOrDefaultAsync(x => x.Id == request.HealthRecordId);
             _context.HealthRecords.Remove(removeHealthRecord);
-            return new RemoveHealthRecordCommandResponse
+
+            if (removeHealthRecord is not null)
             {
-                IsSuccess = true
-            };
+                await _context.SaveChangesAsync();
+                return new RemoveHealthRecordCommandResponse
+                {
+                    IsSuccess = true
+                };
+            }
+            else return new RemoveHealthRecordCommandResponse { IsSuccess = false };
         }
     }
 }

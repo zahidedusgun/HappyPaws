@@ -1,4 +1,5 @@
 ﻿using HappyPaws.Application.Features.Commands.Adoption.CreateAdoption;
+using HappyPaws.Application.Features.Commands.Pet.CreatePet;
 using HappyPaws.Persistence.Contexts;
 using MediatR;
 using System;
@@ -19,23 +20,37 @@ namespace HappyPaws.Application.Features.Commands.Adoption.CreateAdoption
         }
         public async Task<CreateAdoptionCommandResponse> Handle(CreateAdoptionCommandRequest request, CancellationToken cancellationToken)
         {
-            var id = Guid.NewGuid();
-            _context.Adoptions.Add(new()
-            {
-                AdoptionDate = DateTime.UtcNow,
-                AdoptionNotes = request.AdoptionNotes,
-                AdoptionStatus = request.AdoptionStatus,
-                CreatedByUserId = "halaymaster",
-                IsDeleted = false
-            });
+            Domain.Entities.Adopter? adopter = _context.Adopters.FirstOrDefault(a => a.Id == request.AdopterId);
+            Domain.Entities.Pet? pet = _context.Pets.FirstOrDefault(b => b.Id == request.PetId);
 
-            await _context.SaveChangesAsync();
-
-            return new CreateAdoptionCommandResponse
+            if (adopter != null)
             {
-                IsSuccess = true,
-                AdoptionId = id
+                var id = Guid.NewGuid();
+                _context.Adoptions.Add(new()
+                {
+                    AdoptionDate = DateTime.UtcNow,
+                    AdoptionNotes = request.AdoptionNotes,
+                    AdoptionStatus = request.AdoptionStatus,
+                    CreatedByUserId = "halaymaster",
+                    IsDeleted = false,
+                    AdopterId = request.AdopterId,
+                    PetId = request.PetId
+
+                });
+
+                await _context.SaveChangesAsync();
+
+                return new CreateAdoptionCommandResponse
+                {
+                    IsSuccess = true,
+                    AdoptionId = id
+                };
+            }
+            else return new CreateAdoptionCommandResponse
+            {
+                IsSuccess = false
             };
+
         }
     }
 }

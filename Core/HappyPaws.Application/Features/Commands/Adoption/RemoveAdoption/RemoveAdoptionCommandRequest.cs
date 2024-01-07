@@ -10,6 +10,6 @@ namespace HappyPaws.Application.Features.Commands.Adoption.RemoveAdoption
 {
     public class RemoveAdoptionCommandRequest : IRequest<RemoveAdoptionCommandResponse>
     {
-        public Guid Id { get; set; }
+        public Guid AdoptionId { get; set; }
     }
 }

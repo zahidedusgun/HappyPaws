@@ -13,5 +13,7 @@ namespace HappyPaws.Application.Features.Commands.Adoption.CreateAdoption
     {
         public string AdoptionNotes { get; set; }
         public AdoptionStatus AdoptionStatus { get; set; }
+        public Guid AdopterId { get; set; }
+        public Guid PetId { get; set; }
     }
 }

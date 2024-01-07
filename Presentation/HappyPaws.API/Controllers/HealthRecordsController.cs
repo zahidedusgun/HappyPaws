@@ -46,7 +46,7 @@ namespace HappyPaws.API.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromBody] UpdateHealthRecordCommandRequest updateHealthRecordCommandRequest)
+        public async Task<IActionResult> Put([FromQuery] UpdateHealthRecordCommandRequest updateHealthRecordCommandRequest)
         {
             await _mediator.Send(updateHealthRecordCommandRequest);
 
@@ -54,7 +54,7 @@ namespace HappyPaws.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] RemoveHealthRecordCommandRequest removeHealthRecordCommandRequest)
+        public async Task<IActionResult> Delete([FromQuery] RemoveHealthRecordCommandRequest removeHealthRecordCommandRequest)
         {
             await _mediator.Send(removeHealthRecordCommandRequest);
 
