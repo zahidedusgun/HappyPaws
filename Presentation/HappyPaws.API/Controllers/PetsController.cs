@@ -11,6 +11,7 @@ using HappyPaws.Application.Features.Queries.Pet.GetByIdPet;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using HappyPaws.API.Services;
+using System;
 
 namespace HappyPaws.API.Controllers
 {
@@ -25,17 +26,18 @@ namespace HappyPaws.API.Controllers
         private readonly MemoryCacheEntryOptions _cacheEntryOptions;
         private const string PetsCacheKey = "petsList";
 
-        public PetsController(IMediator mediator, FakeDataService fakeDataService,  IMemoryCache memoryCache)
+        public PetsController(IMediator mediator, FakeDataService fakeDataService, ApplicationDbContext context, IMemoryCache memoryCache)
         {
             _mediator = mediator;
             _fakeDataService = fakeDataService;
+            _context = context;
             _memoryCache = memoryCache;
-
 
             _cacheEntryOptions = new MemoryCacheEntryOptions()
             {
                 Priority = CacheItemPriority.High,
-                AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(30)
+                AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(30),
+
             };
 
         }
