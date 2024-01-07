@@ -17,11 +17,9 @@ namespace HappyPaws.API.Controllers
     public class AdopterController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ApplicationDbContext _context;
-        public AdopterController(IMediator mediator, ApplicationDbContext context)
+        public AdopterController(IMediator mediator)
         {
             _mediator = mediator;
-            _context = context;
         }
 
         [HttpGet]
@@ -29,13 +27,11 @@ namespace HappyPaws.API.Controllers
         {
             var requestResponse = await _mediator.Send(getAllAdopterQueryRequest);
 
-            await _context.SaveChangesAsync();
-
             return Ok(requestResponse);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] GetByIdAdopterQueryRequest getByIdAdopterQueryRequest)
+        public async Task<IActionResult> Get([FromQuery] GetByIdAdopterQueryRequest getByIdAdopterQueryRequest)
         {
             return Ok(await _mediator.Send(getByIdAdopterQueryRequest));
         }
@@ -44,8 +40,6 @@ namespace HappyPaws.API.Controllers
         public async Task<IActionResult> Post(CreateAdopterCommandRequest createAdopterCommandRequest)
         {
             var requestResponse = await _mediator.Send(createAdopterCommandRequest);
-
-            await _context.SaveChangesAsync();
 
             return Ok(StatusCode(requestResponse.StatusCode));
         }
@@ -59,7 +53,7 @@ namespace HappyPaws.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] RemoveAdopterCommandRequest removeAdopterCommandRequest)
+        public async Task<IActionResult> Delete([FromQuery] RemoveAdopterCommandRequest removeAdopterCommandRequest)
         {
             await _mediator.Send(removeAdopterCommandRequest);
 

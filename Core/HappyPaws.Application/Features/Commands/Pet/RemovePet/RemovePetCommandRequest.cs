@@ -10,6 +10,6 @@ namespace HappyPaws.Application.Features.Commands.Pet.RemovePet
 {
     public class RemovePetCommandRequest : IRequest<RemovePetCommandResponse>
     {
-        public Guid Id { get; set; }
+        public Guid PetId { get; set; }
     }
 }

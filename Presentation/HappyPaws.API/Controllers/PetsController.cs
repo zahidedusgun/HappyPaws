@@ -76,7 +76,7 @@ namespace HappyPaws.API.Controllers
             }
 
             [HttpDelete("{id}")]
-            public async Task<IActionResult> Delete([FromRoute] RemovePetCommandRequest removePetCommandRequest)
+            public async Task<IActionResult> Delete([FromQuery] RemovePetCommandRequest removePetCommandRequest)
             {
                 await _mediator.Send(removePetCommandRequest);
 

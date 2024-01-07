@@ -1,5 +1,6 @@
 ﻿using HappyPaws.Persistence.Contexts;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,18 +19,24 @@ namespace HappyPaws.Application.Features.Queries.Adoption.GetByIdAdoption
         }
         public async Task<GetByIdAdoptionQueryResponse> Handle(GetByIdAdoptionQueryRequest request, CancellationToken cancellationToken)
         {
-            var adoption = _context.Adoptions.FirstOrDefault(adoption =>
-                adoption.Id == request.Id);
-            return new GetByIdAdoptionQueryResponse
+            Domain.Entities.Adoption? adoption = await _context.Adoptions.FirstOrDefaultAsync(adoption =>
+                adoption.Id.ToString() == request.Id);
+
+            if (adoption is not null)
             {
-                AdoptionDate = adoption.AdoptionDate,
-                AdoptionNotes = adoption.AdoptionNotes,
-                AdoptionStatus = adoption.AdoptionStatus,
-                Pet = adoption.Pet,
-                PetId = adoption.PetId,
-                Adopter = adoption.Adopter,
-                AdopterId = adoption.AdopterId
-            };
+                return new GetByIdAdoptionQueryResponse
+                {
+                    AdoptionDate = adoption.AdoptionDate,
+                    AdoptionNotes = adoption.AdoptionNotes,
+                    AdoptionStatus = adoption.AdoptionStatus,
+                    Pet = adoption.Pet,
+                    PetId = adoption.PetId,
+                    Adopter = adoption.Adopter,
+                    AdopterId = adoption.AdopterId
+                };
+            }
+            return new GetByIdAdoptionQueryResponse();
+
         }
     }
 }

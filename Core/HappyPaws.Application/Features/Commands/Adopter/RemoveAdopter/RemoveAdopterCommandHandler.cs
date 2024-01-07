@@ -18,13 +18,18 @@ namespace HappyPaws.Application.Features.Commands.Adopter.RemoveAdopter
         }
         public async Task<RemoveAdopterCommandResponse> Handle(RemoveAdopterCommandRequest request, CancellationToken cancellationToken)
         {
-            var removeAdopter = _context.Adopters.FirstOrDefault(x => x.Id == request.AdopterId);
+            Domain.Entities.Adopter? removeAdopter = _context.Adopters.FirstOrDefault(x => x.Id == request.AdopterId);
             _context.Adopters.Remove(removeAdopter);
 
-            return new RemoveAdopterCommandResponse
+            if (removeAdopter is not null)
             {
-                IsSuccess = true
-            };
+                await _context.SaveChangesAsync();
+                return new RemoveAdopterCommandResponse
+                {
+                    IsSuccess = true
+                };
+            }
+            else return new RemoveAdopterCommandResponse { IsSuccess = false };
         }
     }
 }

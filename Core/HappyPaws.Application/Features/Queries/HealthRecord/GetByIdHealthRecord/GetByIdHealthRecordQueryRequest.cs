@@ -9,6 +9,6 @@ namespace HappyPaws.Application.Features.Queries.HealthRecord.GetByIdHealthRecor
 {
     public class GetByIdHealthRecordQueryRequest : IRequest<GetByIdHealthRecordQueryResponse>
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

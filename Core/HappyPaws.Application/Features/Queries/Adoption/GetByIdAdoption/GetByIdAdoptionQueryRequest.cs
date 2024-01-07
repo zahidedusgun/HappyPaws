@@ -9,6 +9,6 @@ namespace HappyPaws.Application.Features.Queries.Adoption.GetByIdAdoption
 {
     public class GetByIdAdoptionQueryRequest : IRequest<GetByIdAdoptionQueryResponse>
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }
