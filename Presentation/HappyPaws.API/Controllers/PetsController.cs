@@ -9,6 +9,8 @@ using HappyPaws.Application.Features.Commands.Pet.UpdatePet;
 using HappyPaws.Application.Features.Queries.Pet.GetAllPet;
 using HappyPaws.Application.Features.Queries.Pet.GetByIdPet;
 using MediatR;
+using Microsoft.Extensions.Caching.Memory;
+using HappyPaws.API.Services;
 
 namespace HappyPaws.API.Controllers
 {
@@ -17,24 +19,12 @@ namespace HappyPaws.API.Controllers
     public class PetsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly FakeDataService _fakeDataService;
+        private ApplicationDbContext _context;
+        private readonly IMemoryCache _memoryCache;
+        private readonly MemoryCacheEntryOptions _cacheEntryOptions;
+        private const string PetsCacheKey = "petsList";
 
-<<<<<<< Updated upstream
-        public PetsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetAllPetQueryRequest getAllPetQueryRequest)
-        {
-            var requestResponse = await _mediator.Send(getAllPetQueryRequest);
-
-            return Ok(requestResponse);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] GetByIdPetQueryRequest getByIdPetQueryRequest)
-=======
         public PetsController(IMediator mediator, FakeDataService fakeDataService, IMemoryCache memoryCache)
         {
             _mediator = mediator;
@@ -52,7 +42,6 @@ namespace HappyPaws.API.Controllers
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromQuery] GetByIdPetQueryRequest getByIdPetQueryRequest)
->>>>>>> Stashed changes
         {
             return Ok(await _mediator.Send(getByIdPetQueryRequest));
         }
@@ -63,28 +52,6 @@ namespace HappyPaws.API.Controllers
             var requestResponse = await _mediator.Send(createPetCommandRequest);
 
             return Ok(requestResponse);
-<<<<<<< Updated upstream
-        }
-
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromBody] UpdatePetCommandRequest updatePetCommandRequest)
-        {
-            await _mediator.Send(updatePetCommandRequest);
-
-            return Ok();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] RemovePetCommandRequest removePetCommandRequest)
-        {
-            await _mediator.Send(removePetCommandRequest);
-
-            return Ok();
-        }
-
-
-=======
 
         }
 
@@ -130,6 +97,5 @@ namespace HappyPaws.API.Controllers
             return Ok(await _fakeDataService.GeneratePetDataAsync(cancellationToken));
         }
 
->>>>>>> Stashed changes
     }
 }
