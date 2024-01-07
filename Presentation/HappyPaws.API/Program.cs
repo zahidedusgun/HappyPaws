@@ -29,6 +29,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddScoped<TokenService>();
 
+
 //builder.Services.AddScoped<FakeDataService>(serviceProvider =>
 //{
 //    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
@@ -37,7 +38,13 @@ builder.Services.AddScoped<TokenService>();
 //});
 
 
+
 var connectionString = builder.Configuration.GetConnectionString("YetgenPostgreSQL");
+
+builder.Services.AddScoped<FakeDataService>();
+builder.Services.AddMemoryCache();
+
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {

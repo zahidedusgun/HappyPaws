@@ -13,5 +13,6 @@ namespace HappyPaws.Application.Features.Commands.HealthRecord.CreateHealthRecor
         public string Description{ get; set; }
         public string VetNotes { get; set; }
         public DateTime VetVisitDate { get; set; }
+        public Guid PetId{ get; set; }
     }
 }

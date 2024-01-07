@@ -20,8 +20,10 @@ namespace HappyPaws.Application.Features.Commands.Pet.CreatePet
         }
         public async Task<CreatePetCommandResponse> Handle(CreatePetCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Adopter? adopter = _context.Adopters.FirstOrDefault(a=>a.Id==request.AdopterId);
-            if (adopter != null)
+            Domain.Entities.Adopter? adopter = _context.Adopters.FirstOrDefault(a => a.Id == request.AdopterId);
+
+            if (adopter is not null)
+
             {
                 var id = Guid.NewGuid();
                 _context.Pets.Add(new()
@@ -49,7 +51,7 @@ namespace HappyPaws.Application.Features.Commands.Pet.CreatePet
                 IsSuccess = false
             };
 
-            
+
         }
     }
 }

@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using HappyPaws.Application.Features.Commands.Pet.CreatePet;
 
 namespace HappyPaws.Application.Features.Commands.HealthRecord.CreateHealthRecord
 {
-    public class CreateHealthRecordCommandHandler:IRequestHandler<CreateHealthRecordCommandRequest, CreateHealthRecordCommandResponse>
+    public class CreateHealthRecordCommandHandler : IRequestHandler<CreateHealthRecordCommandRequest, CreateHealthRecordCommandResponse>
     {
         private readonly ApplicationDbContext _context;
 
@@ -19,25 +20,38 @@ namespace HappyPaws.Application.Features.Commands.HealthRecord.CreateHealthRecor
         }
         public async Task<CreateHealthRecordCommandResponse> Handle(CreateHealthRecordCommandRequest request, CancellationToken cancellationToken)
         {
-            var id = Guid.NewGuid();
-            _context.HealthRecords.Add(new()
+
+            Domain.Entities.Pet? pet = _context.Pets.FirstOrDefault(a => a.Id == request.PetId);
+
+            if (pet is not null)
+
             {
-                RecordDate = DateTime.UtcNow,
-                Description = request.Description,
-                VetVisitDate = request.VetVisitDate,
-                VetNotes = request.VetNotes,
-                CreatedByUserId = "halaymaster",
-                IsDeleted = false,
-            });
+                var id = Guid.NewGuid();
+                _context.HealthRecords.Add(new()
+                {
+                    RecordDate = DateTime.UtcNow,
+                    Description = request.Description,
+                    VetVisitDate = request.VetVisitDate,
+                    VetNotes = request.VetNotes,
+                    CreatedByUserId = "halaymaster",
+                    IsDeleted = false,
+                    PetId = request.PetId
+                });
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
 
-            return new CreateHealthRecordCommandResponse
+                return new CreateHealthRecordCommandResponse
+                {
+                    IsSuccess = true,
+                    HealthRecordId = id
+                };
+            }
+            else return new CreateHealthRecordCommandResponse
             {
-                IsSuccess = true,
-                HealthRecordId = id
+                IsSuccess = false
             };
+
         }
     }
 }
