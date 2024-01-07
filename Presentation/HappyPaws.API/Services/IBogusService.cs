@@ -1,6 +1,4 @@
 ﻿
-using Bogus;
-using System.Linq.Expressions;
 
 namespace HappyPaws.API.Services
 {

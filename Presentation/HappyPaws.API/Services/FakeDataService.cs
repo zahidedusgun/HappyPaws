@@ -1,5 +1,4 @@
-﻿
-using HappyPaws.Domain.Entities;
+﻿using HappyPaws.Domain.Entities;
 using HappyPaws.Domain.Enums;
 using HappyPaws.Persistence.Contexts;
 
