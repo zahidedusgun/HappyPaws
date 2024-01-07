@@ -17,8 +17,13 @@
 - Furthermore, the JWT Token system, which provides tokens to users logging into the system, has been successfully implemented. This facilitates secure user authentication and makes it easier for users to access and use the system.
 
 ## Hatice's Part [![Hatice](https://img.shields.io/badge/Hatice-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/hatice-dvc)
-- 
+- In this project, I defined the EntityBase class under the Common folder, which entities under the Common folder can inherit from. Additionally, I defined necessary classes such as ICreatedByEntity.
 
+- I created the Adopter Entity, which holds individuals adopting animals, and the AdopterController. CRUD operations are performed through the AdopterController.
+
+- To utilize the desired features of adopters through Swagger, I created CreateAdopterCommandHandler, CreateAdopterCommandRequest, and CreateAdopterCommandResponse classes under the Features folder. I used the MediatR library in these classes. In addition to the create operations, I also implemented the classes for remove and update requests.
+
+- Alongside the Commands feature, I added Queries for Adopter. I added the ability to view all adopters through the GetAllAdopterQueryHandler and the ability to find an adopter by Id through the GetByIdAdopterQueryHandler.
 
 ## Bahar's Part  [![Bahar](https://img.shields.io/badge/Bahar-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/baharerol)
 - 
