@@ -1,6 +1,8 @@
-﻿using HappyPaws.Application.Features.Commands.Adoption.UpdateAdoption;
+﻿using HappyPaws.Application.Features.Commands.Adopter.UpdateAdopter;
+using HappyPaws.Application.Features.Commands.Adoption.UpdateAdoption;
 using HappyPaws.Persistence.Contexts;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,27 +22,22 @@ namespace HappyPaws.Application.Features.Commands.Adoption.UpdateAdoption
 
         public async Task<UpdateAdoptionCommandResponse> Handle(UpdateAdoptionCommandRequest request, CancellationToken cancellationToken)
         {
-            try
+
+            Domain.Entities.Adoption? adoption = await _context.Adoptions.FirstOrDefaultAsync(x => x.Id.ToString() == request.AdoptionId);
+
+            if (adoption is not null)
             {
-                var Adoption = await _context.Adoptions.FindAsync(Guid.Parse(request.Id));
-
-                if (Adoption == null)
-                {
-                    return new UpdateAdoptionCommandResponse { IsSuccess = false };
-                }
-
-                Adoption.AdoptionNotes = request.AdoptionNotes;
-                Adoption.AdoptionStatus = request.AdoptionStatus;
-
+                adoption.AdoptionNotes = request.AdoptionNotes;
+                adoption.AdoptionStatus = request.AdoptionStatus;
 
                 await _context.SaveChangesAsync();
 
-                return new UpdateAdoptionCommandResponse { IsSuccess = true };
+                return new UpdateAdoptionCommandResponse
+                {
+                    IsSuccess = true
+                };
             }
-            catch (Exception)
-            {
-                return new UpdateAdoptionCommandResponse { IsSuccess = false };
-            }
+            else return new UpdateAdoptionCommandResponse { IsSuccess = false };
         }
     }
 }

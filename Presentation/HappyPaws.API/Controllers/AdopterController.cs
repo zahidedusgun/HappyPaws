@@ -45,7 +45,7 @@ namespace HappyPaws.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromBody] UpdateAdopterCommandRequest updateAdopterCommandRequest)
+        public async Task<IActionResult> Put([FromQuery] UpdateAdopterCommandRequest updateAdopterCommandRequest)
         {
             await _mediator.Send(updateAdopterCommandRequest);
 

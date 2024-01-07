@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HappyPaws.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace HappyPaws.Application.Features.Commands.Adopter.UpdateAdopter
 {
@@ -19,15 +20,11 @@ namespace HappyPaws.Application.Features.Commands.Adopter.UpdateAdopter
 
         public async Task<UpdateAdopterCommandResponse> Handle(UpdateAdopterCommandRequest request, CancellationToken cancellationToken)
         {
-            try
+
+            Domain.Entities.Adopter? adopter = await _context.Adopters.FirstOrDefaultAsync(x => x.Id.ToString() == request.AdopterId);
+
+            if (adopter is not null)
             {
-                var adopter = await _context.Adopters.FindAsync(Guid.Parse(request.AdopterId));
-
-                if (adopter == null)
-                {
-                    return new UpdateAdopterCommandResponse { IsSuccess = false };
-                }
-
                 adopter.FirstName = request.FirstName;
                 adopter.LastName = request.LastName;
                 adopter.Email = request.Email;
@@ -35,13 +32,13 @@ namespace HappyPaws.Application.Features.Commands.Adopter.UpdateAdopter
 
                 await _context.SaveChangesAsync();
 
-                return new UpdateAdopterCommandResponse { IsSuccess = true };
+                return new UpdateAdopterCommandResponse
+                {
+                    IsSuccess = true
+                };
             }
+            else return new UpdateAdopterCommandResponse { IsSuccess = false };
 
-            catch (Exception)
-            {
-                return new UpdateAdopterCommandResponse { IsSuccess = false };
-            }
         }
     }
 }
