@@ -1,52 +1,41 @@
 ﻿using Bogus;
+using Bogus.DataSets;
 using HappyPaws.Domain.Entities;
+using HappyPaws.Domain.Enums;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace HappyPaws.API.Services
 {
-    public class BogusService<T> : IBogusService<T> where T : class, new()
+    public class BogusService<T> : IBogusService<T> where T : class
     {
-        private readonly Faker<T> faker;
+        private readonly Faker<T> _faker;
 
-        public BogusService(string locale = "en_US")
+        public BogusService(Faker<T> faker)
         {
-            faker = new Faker<T>(locale);
+            _faker = faker;
+            CreatePetRules();
         }
 
-        public IBogusService<T> RuleFor<TProperty>(Expression<Func<T, TProperty>> property, Func<Faker, TProperty> valueFunction)
+        public List<T> GenerateFakeData(int count)
         {
-            faker.RuleFor(property, valueFunction);
-            return this;
+            return _faker.Generate(count);
         }
-
-        public T Generate(params Func<Faker, object>[] staticValues)
+        private void CreatePetRules()
         {
-            var instance = faker.Generate();
+            Guid shelterId = Guid.Parse("a37c0420-1651-4762-9a49-b83bd40c39f8");
 
-            foreach (var staticValueFunc in staticValues)
-            {
-                //var staticValue = staticValueFunc(faker);
-                //SetStaticValue(instance, staticValue);
-            }
-
-            return instance;
-        }
-
-        private void SetStaticValue(T instance, object value)
-        {
-            var props = typeof(T).GetProperties();
-
-            foreach (var prop in props)
-            {
-                var propValue = prop.GetValue(instance);
-
-                if (propValue == null || propValue.Equals(default(T)))
-                {
-                    prop.SetValue(instance, value);
-                    break;
-                }
-            }
+            _faker.RuleFor(p => ((Pet)(object)p).Id, f => f.Random.Guid())
+                    .RuleFor(p => ((Pet)(object)p).Name, f => f.Name.FirstName())
+                    .RuleFor(p => ((Pet)(object)p).Type, f => f.PickRandom("Dog", "Cat", "Bird", "Turtle", "Rabbit", "Fish", "Hamster"))
+                    .RuleFor(p => ((Pet)(object)p).Breed, "Unknown")
+                    .RuleFor(p => ((Pet)(object)p).Age, f => (short)f.Random.Number(1, 15))
+                    .RuleFor(p => ((Pet)(object)p).Gender, f => f.PickRandom<Gender>())
+                    .RuleFor(p => ((Pet)(object)p).AdoptionStatus, f => f.PickRandom<AdoptionStatus>())
+                    .RuleFor(p => ((Pet)(object)p).CreatedDate, DateTime.UtcNow)
+                    .RuleFor(p => ((Pet)(object)p).CreatedByUserId, "TestUser")
+                    .RuleFor(p => ((Pet)(object)p).IsDeleted, false)
+                    .RuleFor(p => ((Pet)(object)p).AdopterId, shelterId);
         }
     }
 }
