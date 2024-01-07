@@ -27,6 +27,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddScoped<TokenService>();
 
+
+var connectionString = builder.Configuration["ConnectionStrings:YetgenPostgreSQL"];
+
 builder.Services.AddSingleton(typeof(IBogusService<>), typeof(BogusService<>));
 //builder.Services.AddScoped<FakeDataService>(serviceProvider =>
 //{
@@ -38,9 +41,6 @@ builder.Services.AddSingleton(typeof(IBogusService<>), typeof(BogusService<>));
 builder.Services.AddScoped<FakeDataService>();
 builder.Services.AddMemoryCache();
 
-
-
-var connectionString = builder.Configuration.GetConnectionString("YetgenPostgreSQL");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
