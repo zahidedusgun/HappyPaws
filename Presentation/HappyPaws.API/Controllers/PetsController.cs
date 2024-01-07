@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using HappyPaws.Persistence.Contexts;
 using HappyPaws.Domain.Entities;
@@ -25,7 +25,7 @@ namespace HappyPaws.API.Controllers
         private readonly MemoryCacheEntryOptions _cacheEntryOptions;
         private const string PetsCacheKey = "petsList";
 
-        public PetsController(IMediator mediator, FakeDataService fakeDataService, IMemoryCache memoryCache)
+        public PetsController(IMediator mediator, FakeDataService fakeDataService,  IMemoryCache memoryCache)
         {
             _mediator = mediator;
             _fakeDataService = fakeDataService;
@@ -56,46 +56,46 @@ namespace HappyPaws.API.Controllers
         }
 
 
+           
+
+            [HttpGet]
+            public async Task<IActionResult> Get([FromQuery] GetAllPetQueryRequest getAllPetQueryRequest)
+            {
+                var requestResponse = await _mediator.Send(getAllPetQueryRequest);
+
+                return Ok(requestResponse);
+            }
 
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetAllPetQueryRequest getAllPetQueryRequest)
-        {
-            var requestResponse = await _mediator.Send(getAllPetQueryRequest);
+            [HttpPut("{id}")]
+            public async Task<IActionResult> Put([FromBody] UpdatePetCommandRequest updatePetCommandRequest)
+            {
+                await _mediator.Send(updatePetCommandRequest);
 
-            return Ok(requestResponse);
-        }
+                return Ok();
+            }
 
+            [HttpDelete("{id}")]
+            public async Task<IActionResult> Delete([FromRoute] RemovePetCommandRequest removePetCommandRequest)
+            {
+                await _mediator.Send(removePetCommandRequest);
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromBody] UpdatePetCommandRequest updatePetCommandRequest)
-        {
-            await _mediator.Send(updatePetCommandRequest);
+                return Ok();
+            }
 
-            return Ok();
-        }
+            [HttpPost("GenerateFakeData")]
+            public async Task<IActionResult> GenerateFakeData(CancellationToken cancellationToken)
+            {
+                await _fakeDataService.GeneratePetDataAsync(cancellationToken);
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] RemovePetCommandRequest removePetCommandRequest)
-        {
-            await _mediator.Send(removePetCommandRequest);
+                var pets = await _context
+                    .Pets.AsNoTracking()
+                    .ToListAsync();
 
-            return Ok();
-        }
+                _memoryCache.Set(PetsCacheKey, pets, _cacheEntryOptions);
 
-        [HttpPost("GenerateFakeData")]
-        public async Task<IActionResult> GenerateFakeData(CancellationToken cancellationToken)
-        {
-            await _fakeDataService.GeneratePetDataAsync(cancellationToken);
-
-            var pets = await _context
-                .Pets.AsNoTracking()
-                .ToListAsync();
-
-            _memoryCache.Set(PetsCacheKey, pets, _cacheEntryOptions);
-
-            return Ok(await _fakeDataService.GeneratePetDataAsync(cancellationToken));
-        }
-
-    }
+                return Ok(await _fakeDataService.GeneratePetDataAsync(cancellationToken));
+            }
+        
+    } 
 }

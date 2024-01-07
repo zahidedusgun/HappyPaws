@@ -16,6 +16,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
 using HappyPaws.Application;
+using Microsoft.Extensions.Caching.Memory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,9 +27,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddScoped<TokenService>();
 
-<<<<<<< Updated upstream
-var connectionString = builder.Configuration.GetConnectionString("YetgenPostgreSQL");
-=======
 
 var connectionString = builder.Configuration["ConnectionStrings:YetgenPostgreSQL"];
 
@@ -43,7 +41,6 @@ builder.Services.AddSingleton(typeof(IBogusService<>), typeof(BogusService<>));
 builder.Services.AddScoped<FakeDataService>();
 builder.Services.AddMemoryCache();
 
->>>>>>> Stashed changes
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
