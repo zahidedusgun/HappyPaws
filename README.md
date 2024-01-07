@@ -59,6 +59,13 @@ The incorporation of CQRS with MediatR has brought notable improvements to our p
 - Throughout the successful completion of the project, effective communication and collaboration among team members played a significant role. Addressing challenges together as a team ensured the project's successful outcome. Additionally, we conducted necessary tests upon project completion, ensuring the accurate and reliable functionality of the application.
 
 ## Halime Elif's Part  [![Halime Elif](https://img.shields.io/badge/Elif-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/utopica)
+- Caching with Bogus Package:
+  - To handle large volumes of data input effectively, I've integrated the Bogus package. This implementation of caching mechanisms significantly enhances the         speed and performance of the application, enabling rapid processing of substantial datasets while maintaining scalability and responsiveness.
 
+- Entity Relationship Analysis:
+  - I've performed a comprehensive analysis of the relationships among diverse entities within the database. Using the Fluent API method, I've established               appropriate relationships between entities, thereby ensuring robust data integrity and seamless interactions among various project's components.
+
+- Minimizing External Tool Dependency: Simplifying Data Generation in Our Project
+  - I reduced our reliance on the Bogus library. This means we're not as dependent on external tools to generate fake data for our project. It simplifies things,       making it easier for us to handle without relying too much on extra software.
 ## Issues and Solutions
 - Regarding the changes in this project, we resolved conflicts that occurred in the files. Additionally, we encountered some difficulties while attempting to use the MediatR library in the CommandHandler files. Through our researches, we made some modifications to eliminate unnecessary information presented to the user, which significantly contributed to the project. Simultaneously, we consistently encountered errors while trying to add adopters, pets, healthrecords and adoptions to the database. We were able to easily resolve this issues, stemming from a foreign key errors, through internet research and collaboratively support each other as a team.
