@@ -17,6 +17,8 @@ using System;
 using System.Text;
 using HappyPaws.Application;
 using Microsoft.Extensions.Caching.Memory;
+using HappyPaws.Domain.Entities;
+using Bogus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,9 +30,6 @@ builder.Services.AddApplicationServices();
 builder.Services.AddScoped<TokenService>();
 
 
-var connectionString = builder.Configuration["ConnectionStrings:YetgenPostgreSQL"];
-
-builder.Services.AddSingleton(typeof(IBogusService<>), typeof(BogusService<>));
 //builder.Services.AddScoped<FakeDataService>(serviceProvider =>
 //{
 //    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
@@ -38,8 +37,13 @@ builder.Services.AddSingleton(typeof(IBogusService<>), typeof(BogusService<>));
 //    return new FakeDataService(dbContext);
 //});
 
+
+
+var connectionString = builder.Configuration.GetConnectionString("YetgenPostgreSQL");
+
 builder.Services.AddScoped<FakeDataService>();
 builder.Services.AddMemoryCache();
+
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -51,6 +55,13 @@ builder.Services.AddDbContext<IdentityDbContext>(options =>
 {
     options.UseNpgsql(connectionString);
 });
+
+builder.Services.AddScoped<FakeDataService>();
+
+builder.Services.AddMemoryCache();
+
+builder.Services.AddScoped<IBogusService<Pet>, BogusService<Pet>>();
+builder.Services.AddScoped<Faker<Pet>>();
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
