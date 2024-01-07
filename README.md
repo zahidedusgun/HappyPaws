@@ -1,4 +1,10 @@
-# Happy Paws
+# Happy Paws 🐾
+
+**Our project is a Heartwarming Pet Adoption Platform! 🐾**  
+
+Registered users have the opportunity to adopt homeless companions seeking loving homes, or they can welcome a new friend into their lives. The unique identification details of animals can be viewed by users, making it easier than ever to connect with these special beings.🌟     
+Additionally, veterinarian-approved health records 🏥 secure the well-being of each friend and provide users with instant information. This platform not only facilitates the adoption process but also opens the doors to a life filled with love and responsibility.💖   
+To create a more beautiful world together, open the doors of your heart and invite a companion into your life! 🌍🐶✨  
 # Team 6 Happy Paws Project
 - This repository contains the Happy Paws project provided by YetGen Jump & Akbank Backend Education Program. 
 - The details of the project, which we completed as Team 6, are provided below: ⇓
