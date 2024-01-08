@@ -16,8 +16,8 @@ To create a more beautiful world together, open the doors of your heart and invi
   
 - FluentValidation has been added to the created models, ensuring that users adhere to specific rules when registering in the system.
   
-- In our project, I implemented the CQRS pattern using MediatR to enhance the overall architecture. This involved a significant code restructuring to clearly distinguish between commands, responsible for modifying the system's state (e.g., creating, updating, or deleting data), and queries, which handle data retrieval.
-With the integration of MediatR, I established a mediator responsible for facilitating communication between different components of the system. This mediator efficiently dispatches commands or queries to their designated handlers, fostering a more organized and maintainable codebase.
+- In our project, I implemented the CQRS pattern using MediatR to enhance the overall architecture. This involved a significant code restructuring to clearly distinguish between commands, responsible for modifying the system's state (e.g., creating, updating, or deleting data), and queries, which handle data retrieval.  
+With the integration of MediatR, I established a mediator responsible for facilitating communication between different components of the system. This mediator efficiently dispatches commands or queries to their designated handlers, fostering a more organized and maintainable codebase.  
 The incorporation of CQRS with MediatR has brought notable improvements to our project. The clear separation of concerns has not only made the codebase more scalable but also enhanced its maintainability and overall comprehensibility.
 
 
